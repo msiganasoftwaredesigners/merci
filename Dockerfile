@@ -31,7 +31,7 @@ RUN python -m pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Copy project files
-COPY . /var/www/merci_new/
+COPY . /var/www/merci/
 
 RUN chown -R www-data:www-data /var/www/merci
 
