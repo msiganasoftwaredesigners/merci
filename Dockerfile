@@ -8,7 +8,7 @@ ENV DJANGO_SETTINGS_MODULE=msigana_ecommerce.settings.production
 
 
 # Set the working directory
-WORKDIR /var/www/merci_new
+WORKDIR /var/www/merci
 
 # Install system dependencies and Node.js 21
 RUN apt-get update && \
@@ -22,32 +22,32 @@ RUN apt-get update && \
 RUN node -v && npm -v
 
 # Ensure environment variables from .env are loaded
-COPY .env.merci /var/www/merci_new/.env.merci
+COPY .env.merci /var/www/merci/.env.merci
 
 
 # Install Python dependencies
-COPY requirements.txt /var/www/merci_new/
+COPY requirements.txt /var/www/merci/
 RUN python -m pip install --upgrade pip && \
     pip install -r requirements.txt
 
 # Copy project files
 COPY . /var/www/merci_new/
 
-RUN chown -R www-data:www-data /var/www/merci_new
+RUN chown -R www-data:www-data /var/www/merci
 
 # Install Node.js project dependencies
 RUN cd theme && npm install
 
 
 # Create static folder to avoid warning
-RUN mkdir -p /var/www/merci_new/msigana_ecommerce/static
+RUN mkdir -p /var/www/merci/msigana_ecommerce/static
 
 # Expose port
 EXPOSE 8000
 
 
 # Copy Gunicorn config
-COPY gunicorn.conf.py /var/www/merci_new/
+COPY gunicorn.conf.py /var/www/merci/
 
 # Run Gunicorn with the config file
 CMD ["gunicorn", "--config", "gunicorn.conf.py", "msigana_ecommerce.wsgi:application"]

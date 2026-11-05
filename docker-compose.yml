@@ -27,7 +27,7 @@ services:
       - /var/www/merci/mediafiles:/var/www/merci/mediafiles
 
     ports:
-      - "8001:8000"
+      - "8003:8000"
   
     restart: unless-stopped
 
@@ -42,7 +42,7 @@ services:
       retries: 3
    
     command: >
-      sh -c "export DJANGO_SETTINGS_MODULE=merci_ecommerce.settings.production &&
+      sh -c "export DJANGO_SETTINGS_MODULE=msigana_ecommerce.settings.production &&
          python manage.py makemigrations &&
          python manage.py migrate &&
          python manage.py tailwind install &&
@@ -51,7 +51,7 @@ services:
          python manage.py collectstatic --noinput
          (python manage.py createsuperuser --noinput --email admin@mercimedia.et 2>/dev/null || 
          echo \"[INFO] Superuser already exists - skipping creation\") &&
-         gunicorn --bind 0.0.0.0:8000 merci_ecommerce.wsgi:application"
+         gunicorn --bind 0.0.0.0:8000 msigana_ecommerce.wsgi:application"
  
   redis:
     image: redis:7-alpine
