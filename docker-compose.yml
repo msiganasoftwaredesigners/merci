@@ -70,7 +70,7 @@ services:
     volumes:
       - merci_postgres_data:/var/lib/postgresql/data
     ports:
-      - "5437:5432"
+      - "5439:5432"
     networks:
       - merci_network
 #   nginx:
