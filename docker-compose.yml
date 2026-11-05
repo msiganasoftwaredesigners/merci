@@ -27,7 +27,7 @@ services:
       - /var/www/merci/mediafiles:/var/www/merci/mediafiles
 
     ports:
-      - "8003:8000"
+      - "127.0.0.1:8003:8000"
   
     restart: unless-stopped
 
