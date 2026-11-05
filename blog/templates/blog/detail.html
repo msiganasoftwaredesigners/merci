@@ -1,0 +1,66 @@
+{% extends "merci/base_merci.html" %}
+{% load static %}
+
+{% block title %}{{ post.get_plain_title }} | Merci Media Blog{% endblock %}
+{% block og_title %}{{ post.get_plain_title }}{% endblock %}
+{% block meta_description %}{{ post.short_description }}{% endblock %}
+{% block og_type %}article{% endblock %}
+{% block og_image %}{{ og_image }}{% endblock %}
+
+{% block content %}
+<article>
+<header class="m-hero m-page-hero m-post-hero">
+    <div class="m-hero-bg" aria-hidden="true"><span class="m-orb m-orb-1"></span><span class="m-orb m-orb-2"></span></div>
+    <div class="m-wrap">
+        <nav class="m-crumbs" aria-label="Breadcrumb"><a href="{% url 'merci:home' %}">Home</a> <span aria-hidden="true">/</span> <a href="{% url 'blog:list' %}">Blog</a></nav>
+        <p class="m-eyebrow">{% if post.category %}{{ post.category.name }}{% else %}Article{% endif %}</p>
+        <h1>{{ post.title }}</h1>
+        <p class="m-lead">{{ post.short_description }}</p>
+        <p class="m-post-meta">{{ post.created_at|date:"M j, Y" }} &middot; {{ reading_minutes }} min read</p>
+    </div>
+</header>
+
+<div class="m-section m-post-wrap">
+    <div class="m-wrap m-article-wrap">
+        <figure class="m-article-img"><img src="{{ post.image.url }}" alt="{{ post.get_plain_title }}" width="1100" height="620" fetchpriority="high"></figure>
+        <div class="m-prose">{{ body|safe }}</div>
+
+        <aside class="m-share" aria-label="Share this article">
+            <b>Share</b>
+            <a href="https://wa.me/?text={{ share_url }}" target="_blank" rel="noopener">WhatsApp</a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url }}" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://t.me/share/url?url={{ share_url }}" target="_blank" rel="noopener">Telegram</a>
+        </aside>
+
+        <aside class="m-post-cta">
+            <h2>Planning a video or event?</h2>
+            <p>Tell us what you need and we will send a clear quote within 24 hours.</p>
+            <div class="m-hero-cta">
+                <a class="m-btn m-btn-primary" href="{{ quote_href }}" data-track="post-quote">Get a free quote</a>
+                <a class="m-btn m-btn-dark" href="{% url 'merci:services' %}">See our services</a>
+            </div>
+        </aside>
+    </div>
+</div>
+</article>
+
+{% if related %}
+<section class="m-section m-section-tint" aria-labelledby="rel-title">
+    <div class="m-wrap">
+        <div class="m-head"><p class="m-kicker">Keep reading</p><h2 id="rel-title">More from the blog</h2></div>
+        <div class="m-post-grid">
+            {% for p in related %}
+            <article class="m-post">
+                <a class="m-post-img" href="{% url 'blog:detail' p.slug %}" tabindex="-1" aria-hidden="true"><img src="{{ p.image.url }}" alt="" loading="lazy" width="600" height="375"></a>
+                <div class="m-post-body">
+                    <p class="m-tag-soft">{% if p.category %}{{ p.category.name }}{% else %}Article{% endif %}</p>
+                    <h3><a href="{% url 'blog:detail' p.slug %}">{{ p.title }}</a></h3>
+                    <p class="m-meta">{{ p.created_at|date:"M j, Y" }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+{% endblock %}

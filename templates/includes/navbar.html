@@ -1,0 +1,68 @@
+{% load static %}
+<div class="flex items-center justify-between py-1 px-2 lg:py-1 lg:px-16 navbar shadow-blue-700 shadow-sm bg-slate-50" id="navbar">
+    <a href="/">
+        <img src="{% static 'images/msigana.png' %}" alt="logo" class="h-14 lg:h-24 w-auto object-cover logo" id="logo" data-white-logo="{% static 'images/logo-white.jpg' %}" data-black-logo="{% static 'images/logo-black.jpg' %}">
+    </a>
+    <div class="flex space-x-2 md:space-x-10 items-center">
+        <a href="{% url 'home' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Home</a>  
+        <a href="{% url 'about-us' %}" class=" yatra_one hidden hover:text-blue-900 md:block text-blue-950 md:text-xl text_red">About</a>  
+        <a href="{% url 'post_list' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">News</a> 
+        <a href="{% url 'services' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Services</a> 
+        <a href="{% url 'merci:home' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Merci Media</a>
+        <a href="{% url 'contact-us' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Contact</a> 
+
+        <!-- Button to toggle sidebar -->
+        <button onClick="toggleNavbar()" class="md:hidden text-blue-950">
+            <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+            </svg>
+        </button>
+    </div>
+</div>
+
+<!-- Sidebar -->
+<div id="sidebar" class="sm:hidden fixed inset-0 bg-gray-800 bg-opacity-75 z-50 transition-opacity duration-300 ease-in-out hidden" onClick="toggleNavbar()">
+    <div id="sideNav" class="fixed inset-y-0 left-0 max-w-xs w-full bg-gray-500 p-8 overflow-y-auto transition-transform duration-300 ease-in-out transform -translate-x-full" onClick="event.stopPropagation()">
+        <div class="flex items-center justify-between">
+            <div>
+                <span class="text-white text-lg font-semibold">Menu</span>
+            </div>
+            <div>
+                <button onClick="toggleNavbar()" class="text-gray-400 hover:text-white focus:outline-none focus:text-white">
+                    <span class="sr-only">Close menu</span>
+                    <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <nav class="mt-4">
+            <a href="{% url 'about-us' %}" class="block text-white py-2 hover:text-purple-200">About</a>
+            <a href="{% url 'post_list' %}" class="block text-white py-2 hover:text-purple-200">News</a>
+            <a href="{% url 'services' %}" class="block text-white py-2 hover:text-purple-200">Services</a>
+            <a href="{% url 'merci:home' %}" class="block text-white py-2 hover:text-purple-200">Merci Media & Digitals</a>
+            <a href="{% url 'contact-us' %}" class="block text-white py-2 hover:text-purple-200">Contact</a>
+            <a href="{% url 'home' %}" class="block text-white py-2 hover:text-purple-200">tools</a>
+        </nav>
+    </div>
+</div>
+
+<script>
+    let isOpen = false;
+
+    function toggleNavbar() {
+        isOpen = !isOpen;
+        const sidebar = document.getElementById('sidebar');
+        const sideNav = document.getElementById('sideNav');
+
+        if (isOpen) {
+            sidebar.classList.remove('hidden');
+            sideNav.classList.remove('-translate-x-full');
+            sideNav.classList.add('translate-x-0');
+        } else {
+            sidebar.classList.add('hidden');
+            sideNav.classList.add('-translate-x-full');
+            sideNav.classList.remove('translate-x-0');
+        }
+    }
+</script>

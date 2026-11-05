@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Payment with Bank{% endblock title %}
+{% block content %}
+<div class="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gray-100 py-6 md:py-8 px-4 sm:px-6 lg:px-8 space-y-8 md:space-y-0 md:space-x-8">
+    <!-- Payment Form Section -->
+    <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">Payment with Bank</h1>
+
+        <!-- Display total amount for user information (not editable) -->
+        <div class="mb-6">
+            <p class="text-lg font-semibold text-gray-700 mb-4">
+                Total Amount: <span class="font-bold text-green-600">{{ total_amount }} birr</span>
+            </p>
+        </div>
+
+        <!-- Form section -->
+        <form method="POST" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+            {{ bank_form.as_p }}
+            <button type="submit" class="bg-green-500 text-white font-semibold py-3 px-6 rounded-lg w-full hover:bg-green-600 transition duration-200 ease-in-out">
+                Complete Payment
+            </button>
+        </form>
+    </div>
+
+    <!-- Available Bank Accounts Section -->
+    <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">Bank Accounts</h2>
+        <ul class="space-y-4">
+            {% for bank in bank_details %}
+            <li class="p-4 bg-gray-50 rounded-lg shadow-sm">
+                <p class="text-gray-700"><strong>Bank Name:</strong> {{ bank.bank_name }}</p>
+                <p class="text-gray-700"><strong>Account Name:</strong> {{ bank.account_name }}</p>
+                <p class="text-gray-700"><strong>Account Number:</strong> {{ bank.account_number }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

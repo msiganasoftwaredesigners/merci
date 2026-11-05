@@ -1,0 +1,72 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script>document.documentElement.className = 'js';</script>
+
+    <title>{% block title %}Merci Media | Video Production &amp; Documentaries in Ethiopia{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}Video production, documentaries and photography in Addis Ababa for companies, NGOs and creators. Monthly content packages. Get a free quote today.{% endblock %}">
+    <meta name="keywords" content="video production Addis Ababa, video production company Ethiopia, birthday videography Addis Ababa, wedding videography Addis Ababa, event videography Ethiopia, corporate video Ethiopia, NGO documentary Ethiopia, photography Addis Ababa, social media video content, Merci Media">
+    <meta name="robots" content="{% block robots %}index, follow, max-image-preview:large, max-video-preview:-1{% endblock %}">
+    <meta name="author" content="{{ brand }}">
+    <meta name="theme-color" content="#120b24">
+    <link rel="canonical" href="{{ canonical }}">
+
+    <!-- Local search signals -->
+    <meta name="geo.region" content="ET-AA">
+    <meta name="geo.placename" content="Addis Ababa">
+
+    <!-- Social sharing -->
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:site_name" content="{{ brand }}">
+    <meta property="og:locale" content="en_ET">
+    <meta property="og:url" content="{{ canonical }}">
+    <meta property="og:title" content="{% block og_title %}Merci Media | Video Production &amp; Documentaries in Ethiopia{% endblock %}">
+    <meta property="og:description" content="Video production in Addis Ababa for businesses, NGOs and private events: corporate films, documentaries, weddings, birthdays and photography.">
+    <meta property="og:image" content="{% block og_image %}{{ site.url }}{% static 'merci/img/og-image.jpg' %}{% endblock %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Merci Media &amp; Digital logo: create, connect, convert">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Merci Media | Video Production &amp; Documentaries in Ethiopia">
+    <meta name="twitter:description" content="Video production in Addis Ababa for businesses, NGOs and private events: corporate films, documentaries, weddings, birthdays and photography.">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ site.url }}{% static 'merci/img/og-image.jpg' %}{% endblock %}">
+
+    <!-- Icons -->
+    <link rel="icon" href="{% static 'merci/img/favicon.ico' %}" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'merci/img/favicon-32.png' %}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{% static 'merci/img/icon-192.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'merci/img/apple-touch-icon.png' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&amp;family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&amp;display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'merci/css/merci.css' %}">
+    {% if hero.poster_desktop %}<link rel="preload" as="image" href="{{ hero.poster_desktop }}" media="(min-width: 701px)">{% endif %}
+    {% if hero.poster_mobile %}<link rel="preload" as="image" href="{{ hero.poster_mobile }}" media="(max-width: 700px)">{% endif %}
+
+    {% block extra_head %}{% endblock %}
+    {% if structured_data %}<script type="application/ld+json">{{ structured_data|safe }}</script>{% endif %}
+    {% if site.ga_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.ga_id }}"></script>
+    <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','{{ site.ga_id }}');</script>
+    {% endif %}
+</head>
+<body class="m-body">
+    <a class="m-skip" href="#main">Skip to content</a>
+    {% include "merci/includes/symbols.html" %}
+    {% include "merci/includes/header.html" %}
+
+    <main id="main">
+        {% block content %}{% endblock %}
+    </main>
+
+    {% include "merci/includes/footer.html" %}
+
+    <script src="{% static 'merci/js/merci.js' %}" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Direct Payment{% endblock title %}
+{% block content %}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-100 py-6 md:py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Direct Payment</h2>
+        </div>
+        <form method="post" id="DirectPaymentForm" class="mt-8 space-y-6 bg-white p-8 rounded-lg shadow-lg">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">
+                    Submit
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        function toggleOtherField(selectFieldId, otherFieldId) {
+            $(`#${selectFieldId}`).change(function(){
+                if ($(this).val() === 'OT') {
+                    $(`#${otherFieldId}`).show();
+                } else {
+                    $(`#${otherFieldId}`).hide().val('');
+                }
+            });
+        }
+
+        toggleOtherField('id_class_type', 'id_class_type_other');
+    });
+</script>
+{% endblock %}

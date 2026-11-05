@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}About Us{% endblock title %}
+{% block content %}
+
+    <div class="flex flex-col items-center justify-center py-2">
+        <header class="text-4xl font-bold mb-4 md:mb-8 mt-8 text-blue-500">
+            About Us
+        </header>
+        <section class="max-w-screen-md lg:max-w-screen-lg 2xl:max-w-screen-xl mx-auto px-4 md:px-0">
+            <div class="grid grid-cols-1 md:grid-cols-2">
+                <div>
+                    <p class="mb-2 pt-4">
+                        Msigana Technologies is a technology company based in Addis Ababa Ethiopia, dedicated to delivering applicable digital solutions to private, NGOs and government institutions.
+                    </p>
+                    <p class="mb-2">
+                        Unlike traditional technology providers in Ethiopia, we go beyond mere product development to offer holistic and customised services to meet our clients' needs encompassing advisory, training, business optimization, and product development.
+                    </p>
+                    <p class="mb-2">
+                        By leveraging our expertise, creativity, and passion for innovation, we strive to address the unique challenges faced by our clients and empower them to thrive in an increasingly digital world.
+                    </p>
+                    <p class="mb-2">
+                        We value excellence, integrity, and customer satisfaction, and we are committed to shaping a brighter future for businesses and communities across Ethiopia and beyond.
+                    </p>
+                </div>
+                <div>
+                    <img src="{% static 'images/aboutus.png' %}" alt="About Us" class="w-full h-auto"/>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="mt-4 ml-8 md:ml-32 mb-3">
+        <a href="{% url 'home' %}" class="text-blue-500 hover:underline">
+            <i class="fa-solid fa-arrow-left text-4xl"></i>
+        </a>
+    </div>
+
+
+
+{% endblock content %}

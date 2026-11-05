@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Contact Us{% endblock %}
+{% block content %}
+<div class="text-center bg-center flex justify-center" style="background-image: url('/static/images/contact.jpg');">
+    <div class="w-full md:w-4/5 2xl:w-2/3 p-8 bg-white z-20 md:mt-10 mb-12 md:mb-16 mx-4 rounded-lg shadow-full">
+        <h1 class="text-green-600 font-prompt text-3xl md:text-4xl md:py-8 font-extrabold">Get in Touch!</h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <!-- Contact Information Section -->
+            <div class="text-left border-slate-500 p-4 shadow-lg">
+                <p class="pb-0 md:pb-16">
+                    <a href="tel:+251995030727" aria-label="Call us at +251995030727">
+                        <i class="fas fa-phone-alt mr-4 md:mr-6 text-red-500 text-2xl"></i>
+                        <span class="text-2xl md:text-xl font-bold">+251995030727</span>
+                    </a>
+                </p>
+                <p class="pb-8 md:pb-16 hidden md:block">
+                    <a href="https://maps.app.goo.gl/S8ewjEXn9bDPkjWi7" target="_blank" class="flex items-center text-black hover:underline">
+                        <i class="fas fa-map-marker-alt mr-4 md:mr-6 text-red-500 text-2xl"></i> Ras Abebe Aragay St, Addis Ababa Ethiopia
+                    </a>
+                </p>
+                <p class="pb-8 hidden md:block">
+                    <i class="fas fa-envelope mr-4 md:mr-6 text-red-500 text-2xl"></i>
+                    <a href="mailto:info.msiganadigitalsolutions@gmail.com">info.msiganadigitalsolutions@gmail.com</a>
+                </p>
+                <p class="pb-8 hidden md:block">
+                    <i class="fa-solid fa-clock mr-4 md:mr-6 text-red-500 text-2xl"></i> Monday - Saturday: 8am - 11pm
+                </p>
+            </div>
+
+            <!-- Contact Form Section -->
+            <div class="border-slate-500 p-4 shadow-lg">
+                <!-- Smooth Notification Message -->
+                {% if messages %}
+                <div id="notification" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4 opacity-0">
+                    {% for message in messages %}
+                        <strong class="font-bold">Thank you!</strong>
+                        <span class="block sm:inline">{{ message }}</span>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Contact Form -->
+                <form method="POST" id="contact-form" class="space-y-4">
+                    {% csrf_token %}
+                    <input type="text" name="your_name" placeholder="Name" class="w-full text-black px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    <input type="text" name="your_number" placeholder="Number" class="w-full text-black px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    <input type="email" name="your_email" placeholder="Email" class="w-full text-black px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required>
+                    <textarea name="message" placeholder="Message" rows="5" class="w-full text-black px-4 py-2 border rounded-lg focus:outline-none focus:border-blue-500" required></textarea>
+                    
+                    <!-- reCAPTCHA widget -->
+                    <div class="g-recaptcha" data-sitekey="{{ RECAPTCHA_PUBLIC_KEY }}"></div>
+                    
+                    <!-- Submit Button with Loading Spinner -->
+                    <div class="relative">
+                        <input type="submit" value="Send" class="w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300" id="submit-button" disabled>
+                        <!-- Loading spinner (hidden initially) -->
+                        <div id="loading-spinner" class="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center bg-gray-600 bg-opacity-50 hidden">
+                            <div class="spinner-border text-white" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Google reCAPTCHA Script -->
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        const submitButton = $('#submit-button');
+        const notification = $('#notification');
+        const loadingSpinner = $('#loading-spinner');
+
+        // Function to enable/disable submit button based on reCAPTCHA response
+        function toggleSubmitButton() {
+            const response = grecaptcha.getResponse();
+            if (response) {
+                submitButton.prop('disabled', false);
+            } else {
+                submitButton.prop('disabled', true);
+            }
+        }
+
+        // Use an interval to check the reCAPTCHA response every second
+        setInterval(toggleSubmitButton, 1000);
+
+        // Callback function when reCAPTCHA loads
+        window.onloadCallback = function() {
+            grecaptcha.render("g-recaptcha", {
+                "sitekey": "{{ RECAPTCHA_PUBLIC_KEY }}",
+                "callback": toggleSubmitButton,
+                "expired-callback": function() {
+                    submitButton.prop('disabled', true);  // Disable button if reCAPTCHA expires
+                }
+            });
+        };
+
+        // Form submission
+        $('#contact-form').on('submit', function(e) {
+            e.preventDefault();
+
+            const recaptchaResponse = grecaptcha.getResponse();
+            if (!recaptchaResponse) {
+                alert('Please complete the reCAPTCHA');
+                return;
+            }
+
+            const formData = $(this).serialize() + '&g-recaptcha-response=' + recaptchaResponse;
+            
+            // Show loading spinner and disable the submit button
+            loadingSpinner.removeClass('hidden');
+            submitButton.prop('disabled', true);
+
+            $.ajax({
+                url: '{% url "contact-us" %}',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Hide loading spinner
+                    loadingSpinner.addClass('hidden');
+                    
+                    // Show success notification
+                    notification.text('Your message has been sent successfully!');
+                    notification.removeClass('opacity-0').addClass('opacity-100').fadeIn();
+
+                    $('#contact-form')[0].reset();
+                    grecaptcha.reset();
+                    submitButton.prop('disabled', true);  // Disable button after successful submission
+
+                    // Fade out notification after 5 seconds
+                    setTimeout(function() {
+                        notification.fadeOut();
+                    }, 5000);
+                },
+                error: function(xhr, errmsg, err) {
+                    // Hide loading spinner
+                    loadingSpinner.addClass('hidden');
+                    
+                    // Show error notification
+                    notification.text('Something went wrong, please try again!');
+                    notification.removeClass('opacity-0').addClass('opacity-100').fadeIn();
+
+                    // Fade out error notification after 5 seconds
+                    setTimeout(function() {
+                        notification.fadeOut();
+                    }, 5000);
+                }
+            });
+        });
+    });
+</script>
+
+{% endblock %}

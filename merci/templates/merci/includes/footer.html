@@ -1,0 +1,84 @@
+{% load static %}
+<footer class="m-footer">
+    <div class="m-wrap">
+        <div class="m-footer-top">
+            <div class="m-footer-brand">
+                <img src="{% static 'merci/img/logo-full-on-dark.png' %}" alt="{{ brand }} logo" width="260" height="199" loading="lazy">
+                <p>Video production, documentaries and photography for companies, NGOs and individuals across Ethiopia.</p>
+            </div>
+
+            <nav class="m-footer-col" aria-label="Footer">
+                <h2>Explore</h2>
+                <a href="{% url 'merci:services' %}">All services</a>
+                <a href="{% url 'merci:home' %}#work">Our work</a>
+                <a href="{% url 'merci:home' %}#packages">Packages</a>
+                <a href="{% url 'merci:home' %}#process">How we work</a>
+                <a href="{% url 'merci:home' %}#stories">Client stories</a>
+                <a href="{% url 'blog:list' %}">Blog</a>
+                <a href="{% url 'merci:home' %}#faq">FAQ</a>
+            </nav>
+
+            <nav class="m-footer-col" aria-label="Services">
+                <h2>Services</h2>
+                {% for slug, label in landing_links %}<a href="{% url 'merci:landing' slug %}">{{ label }}</a>{% endfor %}
+            </nav>
+
+            <div class="m-footer-col">
+                <h2>Talk to us</h2>
+                {% if site.whatsapp_url %}<a href="{{ site.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+                {% if site.phone %}<a href="tel:{{ site.phone }}">{{ site.phone_display }}</a>{% endif %}
+                {% if site.email %}<a href="mailto:{{ site.email }}">{{ site.email }}</a>{% endif %}
+                {% if site.telegram %}<a href="{{ site.telegram }}" target="_blank" rel="noopener">Telegram</a>{% endif %}
+                 <a href="https://maps.app.goo.gl/aQHcT72SPJkAwDd3A" target="_blank" class="text-sm md:text-lg hover:text-gray-900 block">Mexcio, Ras Abebe Aragay St, Addis Ababa</a>
+                
+            </div>
+
+            {% if site.youtube or site.instagram or site.tiktok or site.linkedin or site.facebook %}
+            <div class="m-footer-col">
+                <h2>Follow</h2>
+                {% if site.youtube %}<a href="{{ site.youtube }}" target="_blank" rel="noopener">YouTube</a>{% endif %}
+                {% if site.instagram %}<a href="{{ site.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+                {% if site.tiktok %}<a href="{{ site.tiktok }}" target="_blank" rel="noopener">TikTok</a>{% endif %}
+                {% if site.linkedin %}<a href="{{ site.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+                {% if site.facebook %}<a href="{{ site.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="m-footer-bottom">
+            <p>&copy; <span id="m-year">2026</span> {{ brand }}. A business line of <a href="{{ site.parent_url }}" rel="noopener">Msigana</a>.</p>
+            <p class="m-footer-tag">Create <span aria-hidden="true">&bull;</span> Connect <span aria-hidden="true">&bull;</span> Convert</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Always-visible contact actions -->
+{% if site.whatsapp_url %}<a class="m-fab" href="{{ site.whatsapp_url }}" target="_blank" rel="noopener" aria-label="Chat with us on WhatsApp">
+    <svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg><span>Chat with us</span>
+</a>{% endif %}
+
+<nav class="m-actionbar" aria-label="Quick contact">
+    <a href="tel:{{ site.phone }}"><svg class="m-ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Call</span></a>
+    <a href="{{ site.whatsapp_url }}" target="_blank" rel="noopener"><svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg><span>WhatsApp</span></a>
+    <a class="m-actionbar-main" href="{{ quote_href|default:'#inquiry' }}"><svg class="m-ico" aria-hidden="true"><use href="#i-video"/></svg><span>Get a quote</span></a>
+</nav>
+
+<!-- Video player -->
+<div class="m-modal" id="video-modal" hidden role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="m-modal-panel" id="video-panel">
+        <button type="button" class="m-modal-close" id="video-close" aria-label="Close video">
+            <svg class="m-ico" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+        <div class="m-modal-stage" id="video-stage"></div>
+    </div>
+</div>
+
+<!-- Photo viewer -->
+<div class="m-modal m-modal-photo" id="photo-modal" hidden role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button type="button" class="m-modal-close" id="photo-close" aria-label="Close photo">
+        <svg class="m-ico" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+    <button type="button" class="m-photo-nav m-photo-prev" id="photo-prev" aria-label="Previous photo"><svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+    <figure class="m-photo-fig"><img id="photo-img" src="" alt=""><figcaption id="photo-cap"></figcaption></figure>
+    <button type="button" class="m-photo-nav m-photo-next" id="photo-next" aria-label="Next photo"><svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+</div>

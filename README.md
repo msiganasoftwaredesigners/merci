@@ -1,0 +1,1 @@
+docker exec -it msigana_django_web bash

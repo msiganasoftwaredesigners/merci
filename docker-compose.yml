@@ -1,0 +1,98 @@
+services:
+
+
+  merci_web:
+    build:
+      context: .
+    container_name: merci_django_web
+    depends_on:
+      - db
+    env_file:
+      - .env.merci
+    environment:
+      - DEBUG=True
+      - SECRET_KEY=django-indeswcsre-$epx^r=3w8b8po+vc_9&e)50gr1%-@3zgsl#j-&9&km#$6on*8
+      - ALLOWED_HOSTS_PROD=mercimedia.et,www.mercimedia.et,localhost,127.0.0.1,46.202.171.234
+      - ENVIRONMENT=production
+      - PROD_DATABASE_NAME=merci_db
+      - PROD_DATABASE_USER=merci_admin
+      - PROD_DATABASE_PASSWORD=mercidotcom11@#
+      - PROD_DATABASE_HOST=db
+      - PROD_DATABASE_PORT=5432
+      - DJANGO_SUPERUSER_EMAIL=admin@mercimedia.et
+      - DJANGO_SUPERUSER_PASSWORD=mercidotcom11@#
+    volumes:
+      - merci_tmp_data:/tmp
+      - /var/www/merci/staticfiles:/var/www/merci/staticfiles
+      - /var/www/merci/mediafiles:/var/www/merci/mediafiles
+
+    ports:
+      - "8001:8000"
+  
+    restart: unless-stopped
+
+    networks:
+      - merci_network
+   
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+   
+    command: >
+      sh -c "export DJANGO_SETTINGS_MODULE=merci_ecommerce.settings.production &&
+         python manage.py makemigrations &&
+         python manage.py migrate &&
+         python manage.py tailwind install &&
+         python manage.py tailwind start &&
+         python manage.py tailwind build && \
+         python manage.py collectstatic --noinput
+         (python manage.py createsuperuser --noinput --email admin@mercimedia.et 2>/dev/null || 
+         echo \"[INFO] Superuser already exists - skipping creation\") &&
+         gunicorn --bind 0.0.0.0:8000 merci_ecommerce.wsgi:application"
+ 
+  redis:
+    image: redis:7-alpine
+    container_name: merci_redis
+    networks:
+      - merci_network
+  db:
+    image: postgres:17
+    container_name: merci_postgres_db
+    restart: always
+    environment:
+     POSTGRES_DB: merci_db
+     POSTGRES_USER: merci_admin
+     POSTGRES_PASSWORD: mercidotcom11@#
+
+    volumes:
+      - merci_postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - merci_network
+#   nginx:
+#     image: nginx:latest
+#     container_name: merci-nginx
+#     ports:
+#       - "82:80"
+#     volumes:
+#       - ./nginx/conf/mercimedia.et.conf:/etc/nginx/conf.d/merci.com.conf
+#       - /etc/letsencrypt:/etc/letsencrypt:ro
+#       - ./:/var/www/html/merci
+#       - /var/www/merci/staticfiles:/var/www/merci/staticfiles:ro
+#       - /var/www/merci/mediafiles:/var/www/merci/mediafiles:ro
+#     depends_on:
+#       - merci_web
+#     command: /bin/sh -c "rm -f /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+#     networks:
+#       - merci_network
+networks:
+  merci_network:
+
+volumes:
+  merci_postgres_data:
+  merci_tmp_data:
+  

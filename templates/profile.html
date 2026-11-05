@@ -1,0 +1,254 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+
+
+        <div class="flex flex-col md:flex-row   px-0 sm:px-8 md:px-16 lg:px-32 xl:px-32 2xl:max-w-9xl">
+            <div class="md:w-3/12 py-4 pl-4">
+              <div class="flex flex-col">
+                    <div class="pl-4 mr-2 py-3 shadow flex items-center gap-4 bg-blue-100">
+                       <div>
+                           <p class="text-gray-600">Hello!,</p>
+                           <h4 class="text-gray-800 capitalize font-medium">{{user.first_name}} {{user.last_name}}</h4>
+                           <a href="profile-info.html" class=" txt-sm block">{{user.email}}</a>
+                       </div>
+                   </div>
+               
+                   <div class="mt-6 space-y-4 text-gray-600">
+                       <div class="space-y-1 mr-2 pb-3 pl-8 pt-4 shadow bg-blue-100">
+                           <a href="#"
+                               class="relative medium capitalize text-gray-800 font-medium hover:text-primary transition block pl-4">
+                               Point rewards
+                               <span class="absolute -left-8 top-0 text-base md:block sm:hidden  text-green-600 px-4">
+                                   <i class="far fa-credit-card"></i>
+                               </span>
+                           </a>
+                           <a href="#" class="hover:text-primary transition block capitalize pl-4">reward point {{user.point_reward}}</a>
+                       </div>
+               
+                       <div class="px-4 pt-6 shadow bg-blue-100 mr-2 pb-2">
+                           <div class="flex justify-between items center mb-4">
+                               <h3 class="font-medium capitalize text-gray-800 text-lg">personal profile</h3>
+                               <button  id="edit-button" class="text-blue-500">Edit</button>
+                           </div>
+                           <div class="space-y-1">
+                               <p class="text-gray-800"><label class=" pr-2 font-bold">Full Name:</label> {{user.first_name}} {{user.last_name}}</p>
+                               <p class="text-gray-800"><label class=" pr-2 font-bold">Adress:</label>  {{user.address}}</p>
+                               <p class="text-gray-800"><label class=" pr-2 font-bold">Phone Number:</label>  {{user.phone_number}}</p>
+                           </div>
+                       </div>
+                       <div id="edit-modal" class="px-4 hidden absolute top-10">
+                           <form id="edit-form" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                               {% csrf_token %}
+                               <div class="mb-4">
+                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="first-name">
+                                       First Name
+                                   </label>
+                                   <input id="first-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="first_name" value="{{ user.first_name }}">
+                               </div>
+                               <div class="mb-4">
+                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="last-name">
+                                       Last Name
+                                   </label>
+                                   <input id="last-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="last_name" value="{{ user.last_name }}">
+                               </div>
+                               <div class="mb-4">
+                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="address">
+                                       Address
+                                   </label>
+                                   <input id="address" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="address" value="{{ user.address }}">
+                               </div>
+                               <div class="mb-4">
+                                   <label class="block text-gray-700 text-sm font-bold mb-2" for="phone-number">
+                                       Phone Number
+                                   </label>
+                                   <input id="phone-number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" type="text" name="phone_number" value="{{ user.phone_number }}">
+                               </div>
+                               <div class="flex items-center justify-between">
+                                   <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                                       Save
+                                   </button>
+                                   <button id="cancel-button" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                                       Cancel
+                                   </button>
+                               </div>
+                           </form>
+                       </div>
+                   </div> 
+              </div>
+            </div>
+          
+            <div class="md:w-9/12">
+                <h1 class="text-center text-2xl font-medium md:text-3xl my-2 md:mt-6"> My Wishlist</h1>
+              <div class="flex flex-col items-start">
+                <div id="product-list" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-1 2xl:gap-3  mb-6 lg:mb-8">
+                    {% for product in liked_products %}
+                    <div class="flex flex-col">
+                        <div class="m-2 bg-white shadow-md rounded-lg overflow-hidden flex-grow">
+                            <a href="{{product.get_store_url}}" class="relative">
+                              <div class="w-full h-32 2xl:h-64 overflow-hidden relative">
+                                {% with product.get_main_image as main_image %}
+                                {% if main_image %}
+                                    <img class="w-full h-full object-cover" src="{{ main_image.image.url }}" alt="{{ product.product_name }}">
+                                    <div class="absolute inset-0 flex items-center justify-center">
+                                        <span class="text-red-500 text-lg md:text-2xl font-thin p-2 rounded"><i class="fas fa-star"></i> Henom</span>
+                                    </div>
+                                {% endif %}
+                                {% endwith %}
+                            </div>
+                            </a>
+                            <div class="sm:p-2 pl-2  2xl:pl-6 md:pt-0 md:pb-1">
+                                <a href="{{product.get_store_url}}" class="block text-base lg:text-sm  xl:text-lg font-semibold text-gray-800 hover:text-blue-600">{{ product.product_name|slice:":16"|capfirst }}</a>
+                                <div class="my-0 2xl:my-2 text-blue-600 text-sm md:text-base">
+                                    {% load price_filters%}
+                                    {{ product.default_price }} br
+                                </div>
+                                <div class="flex items-center">
+                                    <div class="flex gap-1 text-xs md:text-sm text-yellow-400">
+                                        {% for i in "12345"|make_list %}
+                                            {% if i|add:0 <= product.average_rating|add:0 %}
+                                                <span class="text-yellow-400"><i class="fas fa-star rating"></i></span>
+                                            {% else %}
+                                                <span class=""><i class="far fa-star rating"></i></span>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    <div class="text-xs text-gray-500 ml-3">({{ product.review_count }} Reviews)</div>
+                                </div>
+                            </div>
+                            <div class="bg-blue-600  hover:text-purple-400 text-center py-2 rounded-b mt-1">
+                                <a href="{{product.get_store_url}}" class="text-white  w-full inline-block">Show Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+              </div>
+            </div>
+            <div class="space-y-1 ml-2">
+                <h1 class="text-center text-2xl font-medium md:text-3xl my-2 md:mt-6"> My Orders</h1>
+                <hr class="border-t-2 border-blue-500 my-4">
+                {% for order in orders %}
+                    <div class="order">
+                        <p class="text-gray-800"><label class=" pr-2 font-bold">Order ID:</label> {{order.order_key}}</p>
+                        <p class="text-gray-800"><label class=" pr-2 font-bold">Date:</label>  {{order.order_date}}</p>
+                        <p class="text-gray-800"><label class=" pr-2 font-bold">Total Price:</label>  {{order.order_total_prices}}</p>
+                        <p class="text-gray-800"><label class=" pr-2 font-bold">Order Status:</label>  
+                            {% if order.status == 'received' %}
+                                Ordered
+                            {% elif order.status == 'complete' %}
+                                Received
+                            {% else %}
+                                {{ order.get_status_display }}
+                            {% endif %}
+                        </p>
+                        <p class="text-gray-800"><label class=" pr-2 font-bold">Payment Status:</label>  {{ order.payment_status|yesno:"Paid,Not Paid" }}</p>
+                        <p class="text-gray-800"><label class="pr-2 font-bold">Products:</label>
+                            {% for item in order.items.all %}
+                                {% if item.product %}
+                                    <a href="{{ item.product.get_store_url }}" class="inline-block mr-2">{{ item.product_name }},</a>
+                                {% else %}
+                                    <span class="inline-block mr-2">{{ item.product_name }}</span>
+                                {% endif %}
+                            {% endfor %}
+                        </p>
+                        <hr class="border-t-2 border-blue-500 my-4">
+                    </div>
+                {% endfor %}
+                <button id="show-more-orders" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    Show more orders
+                </button>
+            </div>
+            <script>
+                $(document).ready(function() {
+                    // Hide all but the first three orders
+                    $('.order:gt(2)').hide();
+                
+                    // Show three more orders each time the button is clicked
+                    $('#show-more-orders').click(function() {
+                        $('.order:hidden:lt(3)').show();
+                
+                        // If there are no more hidden orders, hide the button
+                        if ($('.order:hidden').length == 0) {
+                            $(this).hide();
+                        }
+                    });
+                });
+            </script>
+            
+          </div>
+</div>
+<div class="md:w-3/12 py-4 pl-4  px-4 sm:px-8 md:px-16 lg:px-32 xl:px-32 2xl:max-w-9xl">
+    <div class="flex flex-col">
+             <div class="shadow rounded  pl-8 py-4 bg-blue-100 mr-2">
+                 <a href="{% url 'account_logout' %}"
+                 class="relative medium capitalize text-gray-800 font-medium hover:text-primary transition block pl-4">
+                 Logout
+                 <span class="absolute -left-8 top-0 text-base px-4 text-red-500">
+                     <i class="fas fa-sign-out-alt "></i>
+                 </span>
+              </a>
+              
+             </div>
+         </div> 
+    </div>
+  </div>
+
+
+<script>
+    $(document).ready(function() {
+        $('#edit-button').on('click', function() {
+            // show the modal
+            $('#edit-modal').removeClass('hidden');
+        });
+        $('.edit-link').on('click', function(event) {
+            event.preventDefault();
+    
+            // populate the form fields with the current details
+            $('#first-name').val($('.first-name').text());
+            $('#last-name').val($('.last-name').text());
+            $('#address').val($('.address').text());
+            $('#phone-number').val($('.phone-number').text());
+    
+            // show the modal
+            $('#edit-modal').removeClass('hidden');
+        });
+    
+        $('#edit-form').on('submit', function(event) {
+            event.preventDefault();
+    
+            $.ajax({
+                url: '/accounts/profile/',
+                type: 'POST',
+                data: $(this).serialize(),
+                dataType: 'json',
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function(data) {
+                    // update the page with the new data
+                    $('.first-name').text(data.first_name);
+                    $('.last-name').text(data.last_name);
+                    $('.address').text(data.address);
+                    $('.phone-number').text(data.phone_number);
+
+                    // update the profile details on the page
+                    $('h4.text-gray-700.font-medium').text(data.first_name + ' ' + data.last_name);
+                    $('p.text-gray-800').first().text(data.address);
+                    $('p.text-gray-800').last().text(data.phone_number);
+    
+                    // hide the modal
+                    $('#edit-modal').addClass('hidden');
+                },
+            });
+        });
+    
+        $('#cancel-button').on('click', function() {
+            // hide the modal
+            $('#edit-modal').addClass('hidden');
+        });
+    });
+    </script>
+
+
+{% endblock %}

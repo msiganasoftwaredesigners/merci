@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Professional IT & Software Services in Ethiopia | Msigana Technologies{% endblock %}
+
+{% block meta_description %}Explore Msigana Technologies' core services: Custom Software Development, Mobile Apps, Odoo ERP Implementation, and Digital Education. Empowering businesses in Addis Ababa with modern tech.{% endblock %}
+
+{% block meta_keywords %}software development ethiopia, mobile app development addis ababa, odoo erp ethiopia, website design services, IT consulting addis ababa{% endblock %}
+
+{% block canonical %}
+<link rel="canonical" href="https://msigana.com/services/" />
+{% endblock %}
+
+{% block og_tags %}
+<meta property="og:title" content="Expert Software & Digital Services | Msigana Technologies" />
+<meta property="og:description" content="From custom ERP systems to mobile applications, we provide end-to-end digital solutions for Ethiopian businesses." />
+<meta property="og:image" content="https://msigana.com/static/images/services-og.jpg" />
+<meta property="og:url" content="https://msigana.com/services/" />
+<meta property="og:type" content="website" />
+{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Software Development and Digital Solutions",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Msigana Technologies PLC",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Airport Rd",
+      "addressLocality": "Addis Ababa",
+      "addressCountry": "ET"
+    }
+  },
+  "areaServed": {
+    "@type": "Country",
+    "name": "Ethiopia"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Software Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Custom Web Development"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Mobile App Development"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Odoo ERP Implementation"
+        }
+      }
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="flex flex-wrap justify-center">
+    {% for post in posts %}
+    <div class="flex flex-col bg-white text-gray-800 rounded-lg shadow-md hover:shadow-lg overflow-hidden m-4 mb-2 md:mb-4 w-full sm:w-1/2 lg:w-1/4 ">
+      <div class="flex-shrink-0 h-48 w-full">
+        <img
+          class="h-full w-full object-cover"
+          src="{{ post.image.url }}"
+          alt="{{ post.title }}"
+        />
+      </div>
+      <div class="px-6 py-4">
+        <a
+          href="{% url 'post_detail' post.slug %}"
+          class="text-xl font-semibold mb-2 hover:text-gray-700"
+        >
+          {{ post.title }}
+        </a>
+        <p class="text-base text-start">
+          {{ post.short_description|safe }}
+        </p>
+      </div>
+      <div class="px-6 py-4 flex items-center justify-between">
+        <a
+          href="{% url 'post_detail' post.slug %}"
+          class="px-2 py-2 bg-blue-600 text-white text-xs font-bold uppercase rounded"
+        >
+          Read More
+        </a>
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+          {{ post.title_one }}
+        </span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="max-w-6xl mx-auto px-4 sm:px-0 m-4">
+    <a href="{% url 'home' %}" class="inline-block bg-gray-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors duration-200">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+    </div>
+
+{% endblock %}

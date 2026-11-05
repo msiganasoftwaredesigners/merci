@@ -1,0 +1,166 @@
+
+
+{% load static tailwind_tags %}
+
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache"/>
+    <meta http-equiv="cache-control" content="max-age=604800"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="Zrn1_WZmPX3KjOUFpYBA-q39ChsiJLLezkCs-ek82kI" />
+
+    <title>{% block title %}Msigana Technologies | Innovative Digital Solutions in Ethiopia{% endblock %}</title>
+    
+    <meta name="description" content="{% block meta_description %}Leading web development company in Addis Ababa offering custom software solutions, mobile apps, and professional web design services. Local tech experts serving Ethiopian businesses.{% endblock %}" />
+    <meta name="keywords" content="{% block meta_keywords %}web design Ethiopia, mobile app development Addis Ababa, e-commerce website Ethiopia, AI chatbot integration, payment gateway integration Ethiopia, e-learning platform development, digital literacy training Ethiopia, software development company Ethiopia{% endblock %}" />
+    <meta name="author" content="Msigana Technologies" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0077b5" />
+
+    {% block canonical %}
+    <link rel="canonical" href="https://msigana.com" />
+    {% endblock %}
+
+    <!-- Location Meta Tags -->
+    <meta name="geo.region" content="ET-AA" />
+    <meta name="geo.placename" content="Addis Ababa" />
+    <meta name="geo.position" content="9.03;38.74" />
+    <meta name="ICBM" content="9.03, 38.74" />
+
+    <!-- Open Graph / Social Meta -->
+    {% block og_tags %}
+    <meta property="og:title" content="{% block og_title %}Msigana Technologies | Innovative Digital Solutions in Ethiopia{% endblock %}" />
+    <meta property="og:description" content="{% block og_description %}Offering web design, mobile app development, e-commerce solutions, AI chatbot integration, payment systems, and digital solutions in Addis Ababa.{% endblock %}" />
+    <meta property="og:image" content="https://msigana.com/static/images/msigana.png" />
+    <meta property="og:url" content="{% block og_url %}https://msigana.com{% endblock %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_ET" />
+    <meta property="og:site_name" content="Msigana Technologies" />
+    <!-- Social Media Meta Tags -->
+    <meta property="article:author" content="https://www.linkedin.com/company/msigana-technologies/" />
+    <meta property="article:publisher" content="https://www.facebook.com/profile.php?id=61555240536245" />
+    <meta property="og:profile:username" content="msigana-technologies" />
+
+    <!-- LinkedIn Meta Tags -->
+    <meta property="linkedin:title" content="Msigana Technologies | Leading Digital Experts in Addis Ababa, Ethiopia" />
+    <meta property="linkedin:description" content="Your trusted partner for web design, e-commerce, mobile app development, and AI chatbot integration in Ethiopia." />
+    <meta property="linkedin:image" content="https://msigana.com/static/images/msigana.png" />
+    <meta property="linkedin:url" content="https://www.linkedin.com/company/msigana-technologies/" />
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:image" content="https://msigana.com/static/images/msigana.png" />
+    <meta property="og:image:alt" content="Msigana Technologies Logo" />
+    <meta property="og:url" content="https://www.facebook.com/profile.php?id=61555240536245" />
+    {% endblock %}
+
+    <!-- Favicon -->
+ 
+    <link rel="icon" type="image/png" href="{{ favicon.favicon_image.url }}">
+
+    <!-- jQuery -->
+    <script src="{% static 'js/jquery-2.0.0.min.js' %}" type="text/javascript"></script>
+
+    <!-- Font awesome 5 -->
+    <link href="{% static 'fonts/fontawesome/css/all.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'fonts/fontawesome/css/brands.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'fonts/fontawesome/css/solid.css' %}" type="text/css" rel="stylesheet"> 
+
+    <script src="{% static 'js/script.js' %}" type="text/javascript"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/swiper-bundle.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <script src="{% static 'js/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    {% tailwind_css %}
+
+    {% block extra_head %}
+    <!-- Structured Data (JSON-LD) - Override in child templates if needed -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Msigana Technologies",
+      "image": "https://msigana.com/static/images/msigana.png",
+      "url": "https://msigana.com",
+      "telephone": "+251-995-030-326",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Airport Rd",
+        "addressLocality": "Addis Ababa",
+        "addressRegion": "AA",
+        "postalCode": "1000",
+        "addressCountry": "Ethiopia"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "9.03",
+        "longitude": "38.74"
+      },
+      "openingHours": "Mo-Fr 09:00-18:00",
+      "sameAs": [
+        "https://www.linkedin.com/company/msigana-technologies/",
+        "https://www.facebook.com/profile.php?id=61555240536245"
+      ]
+    }
+    </script>
+    {% endblock %}
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2NYKNEP328"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-2NYKNEP328');
+    </script>
+    
+
+</head>
+<body class="flex flex-col min-h-screen font-sans antialiased">
+
+    {% include 'includes/navbar.html' %}
+
+    <main class="flex-grow">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    {% include 'includes/footer.html' %}
+    {% include 'includes/topup.html' %}
+
+    <!-- Intersection Observer for animations -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cards = document.querySelectorAll('.card, .card-left, .card-right');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    } else {
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            });
+
+            cards.forEach(card => observer.observe(card));
+        });
+    </script>
+
+    {% block extra_js %}
+    {% endblock %}
+
+</body>
+</html>

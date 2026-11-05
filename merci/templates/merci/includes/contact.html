@@ -1,0 +1,97 @@
+{% load static %}
+<!-- ================= CONTACT ================= -->
+<section class="m-section m-contact" id="inquiry" aria-labelledby="contact-title">
+    <div class="m-wrap">
+        <div class="m-contact-grid">
+            <div class="m-contact-copy">
+                <p class="m-kicker m-kicker-light">Start a project</p>
+                <h2 id="contact-title">Let&rsquo;s make something worth watching.</h2>
+                <p class="m-lead-sm">Tell us what you need. We reply within 24 hours with next steps and a clear quotation.</p>
+                <div class="m-ways">
+                    {% if site.whatsapp_url %}<a class="m-way m-way-wa" href="{{ site.whatsapp_url }}" target="_blank" rel="noopener"><svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg><span><b>Chat on WhatsApp</b><small>Fastest way to reach us</small></span></a>{% endif %}
+                    {% if site.phone %}<a class="m-way" href="tel:{{ site.phone }}"><svg class="m-ico" aria-hidden="true"><use href="#i-phone"/></svg><span><b>{{ site.phone_display }}</b><small>Call us</small></span></a>{% endif %}
+                    {% if site.email %}<a class="m-way" href="mailto:{{ site.email }}"><svg class="m-ico" aria-hidden="true"><use href="#i-mail"/></svg><span><b>{{ site.email }}</b><small>Send a brief or a tender</small></span></a>{% endif %}
+                    {% if site.telegram %}<a class="m-way" href="{{ site.telegram }}" target="_blank" rel="noopener"><svg class="m-ico" aria-hidden="true"><use href="#i-send"/></svg><span><b>Telegram</b><small>Message us</small></span></a>{% endif %}
+                    {% if site.address %}<div class="m-way m-way-static"><svg class="m-ico" aria-hidden="true"><use href="#i-pin"/></svg><span><b>{{ site.address }}</b><small>Studio and office</small></span></div>{% endif %}
+                </div>
+            </div>
+
+            <div class="m-form-card">
+                <h3>Get your free quote</h3>
+                <p class="m-form-sub">Four quick fields. Add more details if you like.</p>
+
+                <form method="post" action="{{ form_action }}#inquiry" class="m-form">
+                    {% csrf_token %}
+                    <div class="m-hp" aria-hidden="true">
+                        <label for="id_website">Leave this field empty</label>
+                        <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
+                    </div>
+
+                    {% if form.non_field_errors %}<p class="m-err" role="alert">{{ form.non_field_errors }}</p>{% endif %}
+
+                    <div class="m-field">
+                        <label for="{{ form.full_name.id_for_label }}">{{ form.full_name.label }} <span class="m-req">*</span></label>
+                        {{ form.full_name }}
+                        {% for e in form.full_name.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                    </div>
+                    <div class="m-field">
+                        <label for="{{ form.phone.id_for_label }}">{{ form.phone.label }} <span class="m-req">*</span></label>
+                        {{ form.phone }}
+                        {% for e in form.phone.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                    </div>
+                    <div class="m-field">
+                        <label for="{{ form.service.id_for_label }}">{{ form.service.label }} <span class="m-req">*</span></label>
+                        {{ form.service }}
+                        {% for e in form.service.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                    </div>
+                    <div class="m-field">
+                        <label for="{{ form.project_description.id_for_label }}">{{ form.project_description.label }} <span class="m-req">*</span></label>
+                        {{ form.project_description }}
+                        {% for e in form.project_description.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                    </div>
+
+                    <details class="m-more-fields"{% if more_open %} open{% endif %}>
+                        <summary><svg class="m-ico" aria-hidden="true"><use href="#i-plus"/></svg> Add more details <small>(optional)</small></summary>
+                        <div class="m-more-grid">
+                            <div class="m-field">
+                                <label for="{{ form.organization.id_for_label }}">{{ form.organization.label }}</label>
+                                {{ form.organization }}
+                                {% for e in form.organization.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                            </div>
+                            <div class="m-field">
+                                <label for="{{ form.email.id_for_label }}">Email</label>
+                                {{ form.email }}
+                                {% for e in form.email.errors %}<p class="m-err" role="alert">{{ e }}</p>{% endfor %}
+                            </div>
+                            <div class="m-field">
+                                <label for="{{ form.language.id_for_label }}">{{ form.language.label }}</label>
+                                {{ form.language }}
+                            </div>
+                            <div class="m-field">
+                                <label for="{{ form.timeline.id_for_label }}">{{ form.timeline.label }}</label>
+                                {{ form.timeline }}
+                            </div>
+                            <div class="m-field m-field-wide">
+                                <label for="{{ form.budget.id_for_label }}">{{ form.budget.label }}</label>
+                                {{ form.budget }}
+                            </div>
+                        </div>
+                    </details>
+
+                    <button type="submit" class="m-btn m-btn-primary m-btn-lg m-btn-block" data-track="form-submit">Send my request <svg class="m-ico" aria-hidden="true"><use href="#i-send"/></svg></button>
+                    <p class="m-fine">We reply within 24 hours. Your details stay with our team.</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% if sent %}
+<div id="m-toast" class="m-toast" role="status" aria-live="polite">
+    <span class="m-toast-tick" aria-hidden="true"><svg class="m-ico" aria-hidden="true"><use href="#i-check"/></svg></span>
+    <div>
+        <p><b>Thank you. We have your request.</b></p>
+        <p>Our team will get back to you within 24 hours.</p>
+    </div>
+</div>
+{% endif %}

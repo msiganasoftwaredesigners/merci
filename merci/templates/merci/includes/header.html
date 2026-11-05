@@ -1,0 +1,62 @@
+{% load static %}
+<header class="m-header" id="site-header">
+    <div class="m-wrap m-header-in">
+        <a class="m-brand" href="{% url 'merci:home' %}" aria-label="{{ brand }} home">
+            <img src="{% static 'merci/img/mark.png' %}" alt="" width="44" height="41" class="m-brand-mark">
+            <span class="m-brand-text"><b>MERCI</b><i>Media &amp; Digital</i></span>
+        </a>
+
+        <nav class="m-nav" id="primary-nav" aria-label="Primary">
+            <a href="{% url 'merci:services' %}">Services</a>
+            <a href="{% url 'merci:home' %}#work">Our work</a>
+            <a href="{% url 'merci:home' %}#packages">Packages</a>
+            <a href="{% url 'merci:home' %}#stories">Client stories</a>
+            <a href="{% url 'blog:list' %}">Blog</a>
+            <a href="{% url 'merci:home' %}#faq">FAQ</a>
+             <a href="{% url 'merci_service:merci_service' %}">
+    Production
+</a>
+        </nav>
+
+        <div class="m-header-actions">
+            {% if site.phone %}<a class="m-phone" href="tel:{{ site.phone }}" aria-label="Call us on {{ site.phone_display }}">
+                <svg class="m-ico" aria-hidden="true"><use href="#i-phone"/></svg>
+                <span>{{ site.phone_display }}</span>
+            </a>{% endif %}
+            <a class="m-btn m-btn-primary m-btn-sm" href="{{ quote_href|default:'#inquiry' }}" data-track="header-quote">Get a free quote</a>
+            <button type="button" class="m-burger" id="menu-btn" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
+                <svg class="m-ico" aria-hidden="true"><use href="#i-menu"/></svg>
+            </button>
+        </div>
+    </div>
+</header>
+
+<!-- Mobile menu -->
+<div class="m-menu" id="mobile-menu" hidden>
+    <div class="m-menu-top">
+        <span class="m-brand-text"><b>MERCI</b><i>Media &amp; Digital</i></span>
+        <button type="button" class="m-burger" id="menu-close" aria-label="Close menu">
+            <svg class="m-ico" aria-hidden="true"><use href="#i-close"/></svg>
+        </button>
+    </div>
+    <nav class="m-menu-links" aria-label="Mobile">
+        <a href="{% url 'merci:home' %}#services">Services</a>
+        <a href="{% url 'merci:home' %}#work">Our work</a>
+        <a href="{% url 'merci:home' %}#packages">Packages</a>
+        <a href="{% url 'merci:home' %}#process">Process</a>
+        <a href="{% url 'merci:home' %}#stories">Client stories</a>
+        <a href="{% url 'merci:home' %}#faq">FAQ</a>
+    <a href="{% url 'merci_service:merci_service' %}">
+    Video Production
+</a>
+    </nav>
+    <div class="m-menu-cta">
+        <a class="m-btn m-btn-primary m-btn-block" href="{{ quote_href|default:'#inquiry' }}">Get a free quote</a>
+        {% if site.whatsapp_url %}<a class="m-btn m-btn-wa m-btn-block" href="{{ site.whatsapp_url }}" target="_blank" rel="noopener">
+            <svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg> Chat on WhatsApp
+        </a>{% endif %}
+        {% if site.phone %}<a class="m-btn m-btn-line m-btn-block" href="tel:{{ site.phone }}">
+            <svg class="m-ico" aria-hidden="true"><use href="#i-phone"/></svg> {{ site.phone_display }}
+        </a>{% endif %}
+    </div>
+</div>

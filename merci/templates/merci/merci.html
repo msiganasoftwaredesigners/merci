@@ -1,0 +1,362 @@
+{% extends "merci/base_merci.html" %}
+{% load static %}
+
+{% block title %}Video Production in Addis Ababa | Corporate, Weddings, Birthdays &amp; NGO Films | Merci Media{% endblock %}
+{% block og_title %}Video Production in Addis Ababa | Corporate, Weddings, Birthdays &amp; NGO Films | Merci Media{% endblock %}
+{% block meta_description %}Merci Media is a video production company in Addis Ababa: corporate videos, birthday and wedding films, NGO documentaries, photography and social media content. Free quote.{% endblock %}
+
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<section class="m-hero" id="top" aria-labelledby="hero-title">
+    <div class="m-hero-bg" aria-hidden="true">
+        <span class="m-orb m-orb-1"></span>
+        <span class="m-orb m-orb-2"></span>
+        <img class="m-hero-watermark" src="{% static 'merci/img/mark.png' %}" alt="" width="330" height="290">
+    </div>
+
+    <div class="m-wrap">
+        <div class="m-hero-grid">
+            <div class="m-hero-copy">
+                <p class="m-eyebrow"><span class="m-rec" aria-hidden="true"></span> Video studio &middot; Addis Ababa</p>
+                <h1 id="hero-title">Stories that make people <em>act.</em></h1>
+                <p class="m-lead">A video production company in Addis Ababa for businesses, NGOs and private celebrations. From corporate films and documentaries to birthdays and weddings, with one team that is easy to reach.</p>
+
+                <div class="m-hero-cta">
+                    <a class="m-btn m-btn-primary m-btn-lg" href="#inquiry" data-track="hero-quote">Get a free quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    <a class="m-btn m-btn-line m-btn-lg" href="#work" data-track="hero-work"><svg class="m-ico" aria-hidden="true"><use href="#i-play"/></svg> Watch our work</a>
+                </div>
+
+                <div class="m-quick">
+                    {% if site.whatsapp_url %}<a href="{{ site.whatsapp_url }}" target="_blank" rel="noopener"><svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp</a>{% endif %}
+                    {% if site.phone %}<a href="tel:{{ site.phone }}"><svg class="m-ico" aria-hidden="true"><use href="#i-phone"/></svg> {{ site.phone_display }}</a>{% endif %}
+                    {% if site.email %}<a href="mailto:{{ site.email }}"><svg class="m-ico" aria-hidden="true"><use href="#i-mail"/></svg> Email us</a>{% endif %}
+                </div>
+            </div>
+
+            <div class="m-hero-stage">
+                <div class="m-frame">
+                    {% if hero.video_desktop %}
+                    <video id="hero-video" muted loop playsinline preload="none"
+                           {% if hero.poster_desktop %}poster="{{ hero.poster_desktop }}"{% endif %}
+                           data-src-desktop="{{ hero.video_desktop }}" data-src-mobile="{{ hero.video_mobile }}"
+                           {% if hero.poster_mobile %}data-poster-mobile="{{ hero.poster_mobile }}"{% endif %}
+                           aria-label="Merci Media showreel"></video>
+                    {% elif featured %}
+                    <button type="button" class="m-frame-play js-play"
+                            data-embed="{{ featured.embed_url }}" data-embed-m="{{ featured.mobile_embed_url }}"
+                            data-vertical="{% if featured.has_mobile_video %}1{% endif %}" data-title="{{ featured.title }}"
+                            aria-label="Play video: {{ featured.title }}">
+                        <picture>
+                            <source media="(max-width: 700px)" srcset="{{ featured.mobile_thumbnail_url }}">
+                            <img class="m-fill" src="{{ featured.thumbnail_url }}" alt="" width="640" height="360" fetchpriority="high">
+                        </picture>
+                        <span class="m-play m-play-lg"><svg class="m-ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+                        <span class="m-frame-cap">{{ featured.title }}</span>
+                    </button>
+                    {% else %}
+                    <div class="m-slate">
+                        <span class="m-slate-arcs" aria-hidden="true"><i></i><i></i><i></i></span>
+                        <img src="{% static 'merci/img/mark.png' %}" alt="" width="330" height="290">
+                        <p class="m-slate-line"><b>Create</b> &bull; Connect &bull; <b>Convert</b></p>
+                    </div>
+                    {% endif %}
+
+                    <span class="m-corner m-c-tl" aria-hidden="true"></span><span class="m-corner m-c-tr" aria-hidden="true"></span>
+                    <span class="m-corner m-c-bl" aria-hidden="true"></span><span class="m-corner m-c-br" aria-hidden="true"></span>
+                    <div class="m-frame-hud" aria-hidden="true">
+                        <span class="m-hud-rec"><span class="m-rec"></span> REC</span>
+                        <span class="m-hud-tc" id="timecode">00:00:00:00</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="m-ticker" aria-hidden="true">
+        <div class="m-ticker-track">
+            {% for i in "12" %}{% for t in ticker %}<span>{{ t }}</span><b>&bull;</b>{% endfor %}{% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= CREATE / CONNECT / CONVERT ================= -->
+<section class="m-trio" aria-label="How Merci works for you">
+    <div class="m-wrap m-trio-grid">
+        {% for word, text in trio %}
+        <div class="m-trio-item" data-reveal>
+            <p class="m-trio-word">{{ word }}</p>
+            <p>{{ text }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================= WHO WE CREATE FOR ================= -->
+<section class="m-section" id="audiences" aria-labelledby="aud-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">Who we create for</p>
+            <h2 id="aud-title">Businesses, NGOs and families. One standard of craft.</h2>
+        </div>
+        <div class="m-aud-grid">
+            <article class="m-aud m-aud-business" data-reveal>
+                <p class="m-aud-eyebrow">{{ audiences.business.eyebrow }}</p>
+                <h3>{{ audiences.business.title }}</h3>
+                <ul class="m-ticks">{% for pt in audiences.business.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+                <a class="m-btn m-btn-dark" href="#inquiry" data-service="{{ audiences.business.service }}" data-track="aud-business">{{ audiences.business.cta }} <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </article>
+            <article class="m-aud m-aud-private" data-reveal>
+                <p class="m-aud-eyebrow">{{ audiences.private.eyebrow }}</p>
+                <h3>{{ audiences.private.title }}</h3>
+                <ul class="m-ticks">{% for pt in audiences.private.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+                <a class="m-btn m-btn-primary" href="#inquiry" data-service="{{ audiences.private.service }}" data-track="aud-private">{{ audiences.private.cta }} <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </article>
+            <article class="m-aud m-aud-ngo" data-reveal>
+                <p class="m-aud-eyebrow">{{ audiences.ngo.eyebrow }}</p>
+                <h3>{{ audiences.ngo.title }}</h3>
+                <ul class="m-ticks">{% for pt in audiences.ngo.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+                <a class="m-btn m-btn-primary" href="#inquiry" data-service="{{ audiences.ngo.service }}" data-track="aud-ngo">{{ audiences.ngo.cta }} <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </article>
+        </div>
+    </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section class="m-section m-section-tint" id="services" aria-labelledby="svc-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">What we do</p>
+            <h2 id="svc-title">Video and photo services for every kind of story</h2>
+            <p class="m-sub">From corporate films to birthdays and weddings. Order one service or combine them into a complete package. <a href="{% url 'merci:services' %}">See all services</a>.</p>
+        </div>
+        <div class="m-svc-grid">
+            {% for s in services %}
+            <article class="m-svc" data-reveal>
+                <div class="m-svc-top">
+                    <span class="m-svc-icon"><svg class="m-ico m-ico-lg" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg></span>
+                    <span class="m-svc-no" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                </div>
+                <h3>{{ s.title }}</h3>
+                <p class="m-svc-blurb">{{ s.blurb }}</p>
+                <ul class="m-list">{% for item in s.items %}<li>{{ item }}</li>{% endfor %}</ul>
+                <div class="m-svc-links">
+                    {% if s.page %}<a class="m-link" href="{% url 'merci:landing' s.page %}">Learn more <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>{% endif %}
+                    <a class="m-link{% if s.page %} m-link-alt{% endif %}" href="#inquiry" data-service="{{ s.key }}" data-track="service-{{ s.key }}">Get a quote{% if not s.page %} for this service{% endif %} <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- ================= OUR WORK ================= -->
+<section class="m-section m-dark" id="work" aria-labelledby="work-title">
+    <div class="m-wrap">
+        <div class="m-head m-head-row" data-reveal>
+            <div>
+                <p class="m-kicker">Our work</p>
+                <h2 id="work-title">See the standard before you hire us</h2>
+                <p class="m-sub">Films and photography for companies, NGOs, families and creators. Tap any project to watch it.</p>
+            </div>
+            {% if photos %}
+            <div class="m-seg" role="tablist" aria-label="Show films or photos">
+                <button type="button" class="m-seg-btn" role="tab" data-seg="films" aria-selected="true">Films</button>
+                <button type="button" class="m-seg-btn" role="tab" data-seg="photos" aria-selected="false">Photos</button>
+            </div>
+            {% endif %}
+        </div>
+
+        <div data-seg-panel="films" role="tabpanel">
+            {% if projects %}
+                {% if work_categories|length > 1 %}
+                <div class="m-chips" id="work-filter" role="group" aria-label="Filter films by type">
+                    <button type="button" class="m-chip" data-cat="all" aria-pressed="true">All</button>
+                    {% for key, label in work_categories %}<button type="button" class="m-chip" data-cat="{{ key }}" aria-pressed="false">{{ label }}</button>{% endfor %}
+                </div>
+                {% endif %}
+                <div class="m-work-grid" id="work-grid">
+                    {% for p in projects %}
+                    <article class="m-work{% if p.has_mobile_video %} is-vertical{% endif %}" data-cat="{{ p.category }}">
+                        <button type="button" class="m-work-media js-play"
+                                data-embed="{{ p.embed_url }}" data-embed-m="{{ p.mobile_embed_url }}"
+                                data-vertical="{% if p.has_mobile_video %}1{% endif %}" data-title="{{ p.title }}"
+                                aria-label="Play video: {{ p.title }}">
+                            <picture>
+                                <source media="(max-width: 700px)" srcset="{{ p.mobile_thumbnail_url }}">
+                                <img src="{{ p.thumbnail_url }}" alt="{{ p.title }}: {{ p.get_category_display }} by Merci Media" loading="lazy" width="480" height="300">
+                            </picture>
+                            <span class="m-play"><svg class="m-ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+                        </button>
+                        <div class="m-work-body">
+                            <span class="m-tag">{{ p.get_category_display }}</span>
+                            <h3>{{ p.title }}</h3>
+                            {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+                        </div>
+                    </article>
+                    {% endfor %}
+                </div>
+                {% if youtube_channel_url %}
+                <p class="m-more"><a class="m-btn m-btn-line" href="{{ youtube_channel_url }}" target="_blank" rel="noopener">Watch more on YouTube<span class="m-sr"> (opens in a new tab)</span> <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+                {% endif %}
+            {% else %}
+                <div class="m-empty">
+                    <img src="{% static 'merci/img/mark.png' %}" alt="" width="80" height="70" loading="lazy">
+                    <h3>Showreel on request</h3>
+                    <p>We share a tailored showreel for your type of project, whether a company film, an NGO documentary or social content. Ask and we send it the same day.</p>
+                    <a class="m-btn m-btn-primary" href="#inquiry" data-track="work-reel">Request our showreel</a>
+                </div>
+            {% endif %}
+        </div>
+
+        {% if photos %}
+        <div data-seg-panel="photos" role="tabpanel">
+            {% if photo_categories|length > 1 %}
+            <div class="m-chips" id="photo-filter" role="group" aria-label="Filter photos by type">
+                <button type="button" class="m-chip" data-cat="all" aria-pressed="true">All</button>
+                {% for key, label in photo_categories %}<button type="button" class="m-chip" data-cat="{{ key }}" aria-pressed="false">{{ label }}</button>{% endfor %}
+            </div>
+            {% endif %}
+            <div class="m-photos" id="photo-grid">
+                {% for ph in photos %}
+                <button type="button" class="m-photo js-photo" data-cat="{{ ph.category }}" data-full="{{ ph.image.url }}" data-alt="{{ ph.alt }}" data-caption="{{ ph.title }}" aria-label="View photo: {{ ph.title }}">
+                    <img src="{{ ph.image.url }}" alt="{{ ph.alt }}" loading="lazy">
+                </button>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- ================= PACKAGES ================= -->
+<section class="m-section" id="packages" aria-labelledby="pkg-title">
+    <div class="m-wrap">
+        <div class="m-head m-head-row" data-reveal>
+            <div>
+                <p class="m-kicker">Packages</p>
+                <h2 id="pkg-title">Clear packages, a quote within 24 hours</h2>
+                <p class="m-sub">Pick the closest fit. We tailor scope, timeline and price to your brief.</p>
+            </div>
+            <div class="m-seg m-seg-light" role="tablist" aria-label="Packages by client type">
+                {% for g in package_groups %}<button type="button" class="m-seg-btn" role="tab" data-seg-pkg="{{ g.key }}" aria-selected="{% if forloop.first %}true{% else %}false{% endif %}">{{ g.label }}</button>{% endfor %}
+            </div>
+        </div>
+
+        {% for g in package_groups %}
+        <div data-pkg-panel="{{ g.key }}" role="tabpanel" aria-label="{{ g.label }}">
+            <div class="m-pkg-grid">
+                {% for pk in g.items %}
+                <article class="m-pkg{% if pk.feature %} m-pkg-feature{% endif %}" data-reveal>
+                    {% if pk.feature %}<span class="m-badge">Recommended</span>{% endif %}
+                    <p class="m-pkg-cadence">{{ pk.cadence }}</p>
+                    <h3>{{ pk.name }}</h3>
+                    <p class="m-pkg-tag">{{ pk.tag }}</p>
+                    <ul class="m-ticks">{% for pt in pk.points %}<li>{{ pt }}</li>{% endfor %}</ul>
+                    <p class="m-pkg-best">{{ pk.best }}</p>
+                    <a class="m-btn {% if pk.feature %}m-btn-primary{% else %}m-btn-dark{% endif %}" href="#inquiry" data-service="{{ pk.service }}" data-package="{{ pk.name }}" data-track="package-{{ pk.name }}">Get a quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <p class="m-note">Need something different? <a href="#inquiry" data-track="package-custom">Tell us what you have in mind</a> and we will shape a package around it.</p>
+    </div>
+</section>
+
+<!-- ================= PROCESS ================= -->
+<section class="m-section m-dark m-process" id="process" aria-labelledby="proc-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">How we work</p>
+            <h2 id="proc-title">One team, from first idea to final file</h2>
+            <p class="m-sub">You talk to the same people at every stage, so nothing gets lost between planning, filming and delivery.</p>
+        </div>
+        <ol class="m-steps">
+            {% for title, text in steps %}
+            <li class="m-step" data-reveal>
+                <span class="m-step-no" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                <h3><span class="m-sr">Step {{ forloop.counter }}: </span>{{ title }}</h3>
+                <p>{{ text }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+
+<!-- ================= CLIENT STORIES ================= -->
+<section class="m-section m-section-tint" id="stories" aria-labelledby="stories-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">Client stories</p>
+            <h2 id="stories-title">What our clients say</h2>
+        </div>
+
+        {% if testimonials %}
+        <div class="m-stories">
+            {% for t in testimonials %}
+            <figure class="m-story" data-reveal>
+                {% if t.video_id %}
+                <button type="button" class="m-story-video js-play" data-embed="{{ t.embed_url }}" data-title="Client story: {{ t.name }}" aria-label="Play video testimonial from {{ t.name }}">
+                    <img src="{{ t.video_thumbnail_url }}" alt="" loading="lazy" width="480" height="270">
+                    <span class="m-play"><svg class="m-ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+                </button>
+                {% endif %}
+                <blockquote>{{ t.quote }}</blockquote>
+                <figcaption>
+                    {% if t.photo %}<img class="m-avatar" src="{{ t.photo.url }}" alt="" loading="lazy" width="48" height="48">{% else %}<span class="m-avatar m-avatar-ini" aria-hidden="true">{{ t.initials }}</span>{% endif %}
+                    <span><b>{{ t.name }}</b><br><small>{% if t.role %}{{ t.role }}{% if t.organization %}, {% endif %}{% endif %}{{ t.organization }}</small></span>
+                    <span class="m-tag-soft">{{ t.get_client_type_display }}</span>
+                </figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="m-invite" data-reveal>
+            <svg class="m-ico m-ico-xl" aria-hidden="true"><use href="#i-quote"/></svg>
+            <div>
+                <h3>Your success story could be next</h3>
+                <p>Work with Merci and we tell your story on camera, then let your results do the talking.</p>
+            </div>
+            <a class="m-btn m-btn-dark" href="#inquiry" data-track="stories-cta">Start a project</a>
+        </div>
+        {% endif %}
+
+        <div class="m-why">
+            <h3 class="m-why-title">Why teams choose Merci</h3>
+            <div class="m-why-grid">
+                {% for icon, title, text in benefits %}
+                <div class="m-why-item" data-reveal>
+                    <span class="m-why-icon"><svg class="m-ico" aria-hidden="true"><use href="#i-{{ icon }}"/></svg></span>
+                    <div><h4>{{ title }}</h4><p>{{ text }}</p></div>
+                </div>
+                {% endfor %}
+            </div>
+            <ul class="m-clients" aria-label="Who we work with">
+                {% for c in clients %}<li>{{ c }}</li>{% endfor %}
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section class="m-section" id="faq" aria-labelledby="faq-title">
+    <div class="m-wrap m-faq-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">Questions</p>
+            <h2 id="faq-title">Before you get in touch</h2>
+        </div>
+        <div class="m-faq">
+            {% for q, a in faq %}
+            <details class="m-q" data-reveal>
+                <summary>{{ q }} <svg class="m-ico" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+                <p>{{ a }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% include "merci/includes/contact.html" %}
+
+{% endblock %}

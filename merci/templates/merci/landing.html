@@ -1,0 +1,104 @@
+{% extends "merci/base_merci.html" %}
+{% load static %}
+
+{% block title %}{{ page.meta_title }}{% endblock %}
+{% block og_title %}{{ page.meta_title }}{% endblock %}
+{% block meta_description %}{{ page.meta }}{% endblock %}
+
+{% block content %}
+<section class="m-hero m-page-hero" aria-labelledby="page-title">
+    <div class="m-hero-bg" aria-hidden="true">
+        <span class="m-orb m-orb-1"></span>
+        <span class="m-orb m-orb-2"></span>
+        <img class="m-hero-watermark" src="{% static 'merci/img/mark.png' %}" alt="" width="330" height="290">
+    </div>
+    <div class="m-wrap">
+        <nav class="m-crumbs" aria-label="Breadcrumb">
+            <a href="{% url 'merci:home' %}">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">{{ page.nav }}</span>
+        </nav>
+        <p class="m-eyebrow"><span class="m-rec" aria-hidden="true"></span> {{ page.kicker }}</p>
+        <h1 id="page-title">{{ page.h1 }}</h1>
+        <p class="m-lead">{{ page.intro }}</p>
+        <div class="m-hero-cta">
+            <a class="m-btn m-btn-primary m-btn-lg" href="#inquiry" data-service="{{ page.service }}" data-track="landing-quote">Get a free quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            {% if site.whatsapp_url %}<a class="m-btn m-btn-line m-btn-lg" href="{{ site.whatsapp_url }}" target="_blank" rel="noopener"><svg class="m-ico" aria-hidden="true"><use href="#i-chat"/></svg> WhatsApp us</a>{% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="m-section" aria-labelledby="inc-title">
+    <div class="m-wrap m-split">
+        <div data-reveal>
+            <p class="m-kicker">What you get</p>
+            <h2 id="inc-title">What is included</h2>
+            <ul class="m-ticks m-ticks-lg">{% for item in page.included %}<li>{{ item }}</li>{% endfor %}</ul>
+            <a class="m-btn m-btn-dark m-split-cta" href="#inquiry" data-service="{{ page.service }}" data-track="landing-included">Request a quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div data-reveal>
+            <p class="m-kicker">Perfect for</p>
+            <h2>Good for</h2>
+            <ul class="m-clients m-clients-lg">{% for g in page.good_for %}<li>{{ g }}</li>{% endfor %}</ul>
+        </div>
+    </div>
+</section>
+
+<section class="m-section m-dark m-process" aria-labelledby="proc-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal>
+            <p class="m-kicker">How we work</p>
+            <h2 id="proc-title">From first call to final file</h2>
+        </div>
+        <ol class="m-steps">
+            {% for title, text in steps %}
+            <li class="m-step" data-reveal>
+                <span class="m-step-no" aria-hidden="true">{{ forloop.counter|stringformat:"02d" }}</span>
+                <h3><span class="m-sr">Step {{ forloop.counter }}: </span>{{ title }}</h3>
+                <p>{{ text }}</p>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+</section>
+
+{% if testimonials %}
+<section class="m-section m-section-tint" aria-labelledby="stories-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal><p class="m-kicker">Client stories</p><h2 id="stories-title">What our clients say</h2></div>
+        <div class="m-stories">
+            {% for t in testimonials %}
+            <figure class="m-story" data-reveal>
+                <blockquote>{{ t.quote }}</blockquote>
+                <figcaption><span class="m-avatar m-avatar-ini" aria-hidden="true">{{ t.initials }}</span><span><b>{{ t.name }}</b><br><small>{{ t.organization }}</small></span></figcaption>
+            </figure>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<section class="m-section" aria-labelledby="faq-title">
+    <div class="m-wrap m-faq-wrap">
+        <div class="m-head" data-reveal><p class="m-kicker">Questions</p><h2 id="faq-title">Frequently asked</h2></div>
+        <div class="m-faq">
+            {% for q, a in page.faq %}
+            <details class="m-q" data-reveal>
+                <summary>{{ q }} <svg class="m-ico" aria-hidden="true"><use href="#i-plus"/></svg></summary>
+                <p>{{ a }}</p>
+            </details>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="m-section m-section-tint" aria-labelledby="more-title">
+    <div class="m-wrap">
+        <div class="m-head" data-reveal><p class="m-kicker">More from Merci</p><h2 id="more-title">Other services</h2></div>
+        <ul class="m-related">
+            {% for slug, label in related %}<li><a href="{% url 'merci:landing' slug %}">{{ label }} <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>{% endfor %}
+            <li><a href="{% url 'merci:home' %}#work">See our work <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+    </div>
+</section>
+
+{% include "merci/includes/contact.html" %}
+{% endblock %}

@@ -1,0 +1,82 @@
+{% load static %}
+ <div class="w-full bg-white pt-8 md:pt-12 border-gray-100 items-center px-4 sm:px-8 md:px-16 lg:px-8 xl:px-32 2xl:px-64 2xl:max-w-9xl 2xl:mx-auto pb-6 md:pb-8">
+    <div class="container">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="space-y-4 md:space-y-8">
+                <a href="{% url 'home' %}" class="brand-wrap" onclick="scrollToTop()">
+                    <img class="w-64 h-32 object-cover overflow-hidden" src="{% static 'images/msigana.png' %}" alt="Msigana logo">
+                </a>
+                <p class="text-base">Transforming Ideas into Digital Solutions</p>
+                <div class="space-y-4">
+                    <div>
+                        <span class="text-xl font-medium text-red-600 text-center">Follow us</span>
+                    </div>
+                    <div class="flex space-x-6">
+                        <a href="https://web.facebook.com/MsiganaTechnologies/" target="_blank" class="hover:text-red-600" alt="Facebook Page">
+                            <i class="fab fa-facebook-f text-3xl"></i>
+                        </a>
+                        
+                        <a href="https://wa.me/+251995030727" target="_blank" class="hover:text-red-600" alt="WhatsApp Link">
+                            <i class="fab fa-whatsapp text-3xl"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/msigana-technologies" target="_blank" class="hover:text-red-600" alt="Linkedin Page">
+                            <i class="fab fa-linkedin text-3xl"></i>
+                        </a>
+                        <a href="https://t.me/msiganadotcom" target="_blank" class="hover:text-red-600" alt="Telegram Channel">
+                            <i class="fab fa-telegram text-3xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 md:col-span-2">
+                <div>
+                    <h3 class="text-base font-semibold text-red-600 tracking-wider uppercase">Contact Us</h3>
+                    <div class="mt-2 md:mt-4 space-y-2 md:space-y-4">
+                        <a href="tel:+251995030727" class="text-sm md:text-lg hover:text-gray-900 block">+2519-9503-0727</a>
+                        <a href="mailto:info@mercimedia.et" class="text-sm md:text-lg hover:text-gray-900 block">info@mercimedia.et</a>
+                        <a href="https://maps.app.goo.gl/S8ewjEXn9bDPkjWi7" target="_blank" class="text-sm md:text-lg hover:text-gray-900 block">Mexcio, Ras Abebe Aragay St, Addis Ababa</a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-base font-semibold text-red-600 tracking-wider uppercase">Important Links</h3>
+                    <div class="mt-2 md:mt-4 space-y-2 md:space-y-4">
+                        <a href="{% url 'contact-us' %}" class="text-sm md:text-lg hover:text-gray-900 block" onclick="scrollToTop()">Contact Us</a>
+                        <a href="{% url 'services' %}" class="text-sm md:text-lg hover:text-gray-900 block" onclick="scrollToTop()">Services</a>
+                        <a href="{% url 'merci:home' %}" class="text-sm md:text-lg hover:text-gray-900 block">Merci Media</a>
+                        <a href="{% url 'about-us' %}" class="text-sm md:text-lg hover:text-gray-900 block" onclick="scrollToTop()">About Us</a>
+                        <a href="{% url 'post_list' %}" class="text-sm md:text-lg hover:text-gray-900 block" onclick="scrollToTop()">News</a>
+                        <a href="{% url 'privacy-policy' %}" class="text-sm md:text-lg hover:text-gray-900 block" onclick="scrollToTop()">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+<div class="bg-green-950 px-4 md:px-16 lg:px-16 xl:px-48 w-full">
+    <div class="py-4 md:py-4 w-full">
+        <div class="container flex items-center justify-between">
+            <p class="text-white text-base md:text-lg">Copyright &copy; <span id="current-year" class="text-white"></span></p>
+
+<script>
+  document.getElementById('current-year').textContent = new Date().getFullYear();
+</script>
+
+            <div class="col-md-8 text-md-center">
+                <span class="px-1 md:px-2 text-base md:text-lg text-white">Msigana.com</span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>(function(w, d) { w.CollectId = "67b9c5b53b5fcbcbdb784259"; var h = d.head || d.getElementsByTagName("head")[0]; var s = d.createElement("script"); s.setAttribute("type", "text/javascript"); s.async=true; s.setAttribute("src", "https://collectcdn.com/launcher.js"); h.appendChild(s); })(window, document);</script>
+{% comment %} 
+<script>
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    }
+</script> {% endcomment %}

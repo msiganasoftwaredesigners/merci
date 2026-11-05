@@ -1,0 +1,97 @@
+{% extends "merci/base_merci.html" %}
+{% load static %}
+
+{% block title %}Blog: Video Production Tips, Event Ideas &amp; Stories | Merci Media Addis Ababa{% endblock %}
+{% block og_title %}Merci Media Blog: video production tips, event ideas and stories{% endblock %}
+{% block meta_description %}Practical advice on corporate video, wedding and birthday films, NGO documentaries and social media content from the Merci Media team in Addis Ababa.{% endblock %}
+{% block robots %}{% if noindex %}noindex, follow{% else %}index, follow, max-image-preview:large{% endif %}{% endblock %}
+
+{% block content %}
+<section class="m-hero m-page-hero" aria-labelledby="blog-title">
+    <div class="m-hero-bg" aria-hidden="true"><span class="m-orb m-orb-1"></span><span class="m-orb m-orb-2"></span></div>
+    <div class="m-wrap">
+        <nav class="m-crumbs" aria-label="Breadcrumb"><a href="{% url 'merci:home' %}">Home</a> <span aria-hidden="true">/</span> <span aria-current="page">Blog</span></nav>
+        <p class="m-eyebrow"><span class="m-rec" aria-hidden="true"></span> The Merci blog</p>
+        <h1 id="blog-title">Ideas, tips and stories from behind the camera</h1>
+        <p class="m-lead">Practical advice on video, photography and content for businesses, NGOs and families in Ethiopia.</p>
+        <form class="m-search" method="get" action="{% url 'blog:list' %}" role="search">
+            <label class="m-sr" for="blog-q">Search articles</label>
+            <input class="m-input" id="blog-q" type="search" name="q" value="{{ query }}" placeholder="Search articles">
+            {% if category %}<input type="hidden" name="category" value="{{ category.slug }}">{% endif %}
+            <button class="m-btn m-btn-primary" type="submit">Search</button>
+        </form>
+    </div>
+</section>
+
+<section class="m-section" aria-label="Articles">
+    <div class="m-wrap">
+        {% if categories %}
+        <div class="m-chips m-chips-light" role="group" aria-label="Filter by topic">
+            <a class="m-chip{% if not category %} is-on{% endif %}" href="{% url 'blog:list' %}">All</a>
+            {% for c in categories %}<a class="m-chip{% if category.slug == c.slug %} is-on{% endif %}" href="{% url 'blog:list' %}?category={{ c.slug }}">{{ c.name }}</a>{% endfor %}
+        </div>
+        {% endif %}
+
+        {% if featured %}
+        <article class="m-feature" data-reveal>
+            <a class="m-feature-img" href="{% url 'blog:detail' featured.slug %}" tabindex="-1" aria-hidden="true"><img src="{{ featured.image.url }}" alt="" width="900" height="560" fetchpriority="high"></a>
+            <div class="m-feature-body">
+                <p class="m-tag-soft">{% if featured.category %}{{ featured.category.name }}{% else %}Latest{% endif %}</p>
+                <h2><a href="{% url 'blog:detail' featured.slug %}">{{ featured.title }}</a></h2>
+                <p>{{ featured.short_description }}</p>
+                <p class="m-meta">{{ featured.created_at|date:"M j, Y" }}</p>
+                <a class="m-link" href="{% url 'blog:detail' featured.slug %}">Read the article <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+            </div>
+        </article>
+        {% endif %}
+
+        {% if posts %}
+        <div class="m-post-grid">
+            {% for p in posts %}
+            <article class="m-post" data-reveal>
+                <a class="m-post-img" href="{% url 'blog:detail' p.slug %}" tabindex="-1" aria-hidden="true"><img src="{{ p.image.url }}" alt="" loading="lazy" width="600" height="375"></a>
+                <div class="m-post-body">
+                    <p class="m-tag-soft">{% if p.category %}{{ p.category.name }}{% else %}Article{% endif %}</p>
+                    <h2><a href="{% url 'blog:detail' p.slug %}">{{ p.title }}</a></h2>
+                    <p>{{ p.short_description }}</p>
+                    <p class="m-meta">{{ p.created_at|date:"M j, Y" }}</p>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not featured and not posts %}
+        <div class="m-invite">
+            <svg class="m-ico m-ico-xl" aria-hidden="true"><use href="#i-film"/></svg>
+            <div>
+                <h3>{% if query or category %}No articles found{% else %}Articles are on the way{% endif %}</h3>
+                <p>{% if query or category %}Try a different search, or <a href="{% url 'blog:list' %}">see all articles</a>.{% else %}Meanwhile, see what we do or tell us about your project.{% endif %}</p>
+            </div>
+            <a class="m-btn m-btn-dark" href="{% url 'merci:services' %}">See our services</a>
+        </div>
+        {% endif %}
+
+        {% if page.has_other_pages %}
+        <nav class="m-pager" aria-label="Pages">
+            {% if page.has_previous %}<a class="m-btn m-btn-dark m-btn-sm" href="?{{ pager_qs }}page={{ page.previous_page_number }}" rel="prev">Newer</a>{% endif %}
+            <span>Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+            {% if page.has_next %}<a class="m-btn m-btn-dark m-btn-sm" href="?{{ pager_qs }}page={{ page.next_page_number }}" rel="next">Older</a>{% endif %}
+        </nav>
+        {% endif %}
+    </div>
+</section>
+
+<section class="m-section m-contact m-cta-band" aria-labelledby="blog-cta">
+    <div class="m-wrap m-cta-in">
+        <div>
+            <h2 id="blog-cta">Have a video in mind?</h2>
+            <p class="m-lead-sm">Tell us about it and get a clear quote within 24 hours.</p>
+        </div>
+        <div class="m-hero-cta">
+            <a class="m-btn m-btn-primary m-btn-lg" href="{{ quote_href }}" data-track="blog-quote">Get a free quote</a>
+            {% if site.whatsapp_url %}<a class="m-btn m-btn-line m-btn-lg" href="{{ site.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp us</a>{% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}

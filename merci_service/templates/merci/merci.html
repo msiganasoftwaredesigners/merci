@@ -1,0 +1,539 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Merci Media & Digital Marketing | Video Production & Photography{% endblock %}
+
+{% block meta_tags %}
+    <meta name="description" content="Discover Merci Media & Digital Marketing, a media production business line of Misgana Technologies PLC offering video production, photography, studio production, documentaries, and multilingual content services." />
+    <meta name="keywords" content="video production in Addis Ababa, professional photography services, documentary production in Ethiopia, corporate video production, studio video production, multilingual content production, event videography and photography, video production company in Ethiopia, Merci Media" />
+    <link rel="canonical" href="{{ request.scheme }}://{{ request.get_host }}{% url 'merci:merci_service' %}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Merci Media & Digital Marketing | Video Production & Photography" />
+    <meta property="og:description" content="End-to-end video production, photography, studio production, documentaries, and multilingual content in Ethiopia." />
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% static 'images/merci_logo.jpg' %}" />
+{% endblock %}
+
+{% block extra_head %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Merci Media & Digital Marketing",
+  "description": "Video production, photography, studio production, documentary production, and multilingual content services in Ethiopia.",
+  "url": "{{ request.scheme }}://{{ request.get_host }}{% url 'merci:merci_service' %}",
+  "logo": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/merci_logo.jpg' %}",
+  "areaServed": ["Addis Ababa", "Ethiopia"],
+  "parentOrganization": { "@type": "Organization", "name": "Misgana Technologies PLC" },
+  "makesOffer": [
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Professional Video Production" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Professional Photography" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Studio Production" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Documentary Production" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Multilingual Content Production" } },
+    { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Video Hosting and Presentation" } }
+  ]
+}
+</script>
+
+<style>
+    /* Brand tokens taken from the Merci logo. Plain CSS so no Tailwind rebuild is required for colors. */
+    .merci {
+        --m-ink: #1c1233;      /* deep aubergine from the wordmark */
+        --m-ink-2: #2a1b4a;
+        --m-purple: #6b2d7b;   /* the right leg of the M */
+        --m-orange: #f5a21a;   /* the left leg of the M */
+        --m-orange-deep: #d9820b;
+        --m-cream: #fdf8f2;    /* logo background */
+        --m-sand: #f4ebe0;
+        --m-text: #3a3148;
+        font-family: inherit;
+        color: var(--m-text);
+        background: var(--m-cream);
+    }
+    .merci .display { font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif; letter-spacing: -0.01em; }
+    .merci :focus-visible { outline: 3px solid var(--m-orange); outline-offset: 3px; }
+
+    .merci .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.6rem; border-radius: .6rem; font-weight: 700; transition: background-color .2s, color .2s, border-color .2s; }
+    .merci .btn-primary { background: var(--m-orange); color: var(--m-ink); }
+    .merci .btn-primary:hover { background: #ffb73d; }
+    .merci .btn-ghost { border: 2px solid rgba(255,255,255,.55); color: #fff; }
+    .merci .btn-ghost:hover { background: #fff; color: var(--m-ink); border-color: #fff; }
+    .merci .btn-dark { background: var(--m-ink); color: #fff; }
+    .merci .btn-dark:hover { background: var(--m-purple); }
+
+    .merci .icon { width: 1.5rem; height: 1.5rem; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Hero: signal arcs echo the broadcast mark above the logo's M. Drawn once on load. */
+    .merci .arc { fill: none; stroke: var(--m-orange); stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: merci-draw 1.4s cubic-bezier(.2,.7,.2,1) forwards; }
+    .merci .arc:nth-child(2) { animation-delay: .25s; }
+    .merci .arc:nth-child(3) { animation-delay: .5s; }
+    .merci .arc:nth-child(4) { animation-delay: .75s; }
+    .merci .arc:nth-child(5) { animation-delay: 1s; }
+    @keyframes merci-draw { to { stroke-dashoffset: 0; } }
+
+    /* Service cards */
+    .merci .svc { background: #fff; border: 1px solid #eadfce; border-radius: 1.1rem; padding: 1.75rem; border-top: 4px solid var(--m-orange); display: flex; flex-direction: column; }
+    .merci .svc:nth-child(even) { border-top-color: var(--m-purple); }
+    .merci .svc li { position: relative; padding-left: 1.25rem; }
+    .merci .svc li::before { content: ""; position: absolute; left: 0; top: .6em; width: .5rem; height: 2px; background: var(--m-orange-deep); }
+
+    /* Process timeline: vertical on mobile, horizontal on desktop */
+    .merci .tl { list-style: none; margin: 0; padding: 0; }
+    .merci .tl li { position: relative; padding: 0 0 2rem 3.25rem; }
+    .merci .tl li:last-child { padding-bottom: 0; }
+    .merci .tl li::before { content: ""; position: absolute; left: 1.05rem; top: 2.1rem; bottom: -.1rem; width: 2px; background: rgba(245,162,26,.45); }
+    .merci .tl li:last-child::before { display: none; }
+    .merci .tl .dot { position: absolute; left: 0; top: 0; width: 2.2rem; height: 2.2rem; border-radius: 9999px; background: var(--m-orange); color: var(--m-ink); font-weight: 800; display: grid; place-items: center; }
+    @media (min-width: 1024px) {
+        .merci .tl { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1.5rem; }
+        .merci .tl li { padding: 3.25rem 0 0; }
+        .merci .tl li::before { left: 1.1rem; right: -1.5rem; top: 1.05rem; bottom: auto; width: auto; height: 2px; }
+    }
+
+    /* Portfolio */
+    .merci .tab { padding: .5rem 1rem; border-radius: 9999px; border: 1px solid rgba(255,255,255,.3); color: #fff; font-size: .875rem; font-weight: 600; transition: background-color .2s, color .2s; }
+    .merci .tab:hover, .merci .tab[aria-pressed="true"] { background: var(--m-orange); color: var(--m-ink); border-color: var(--m-orange); }
+    .merci .thumb { aspect-ratio: 16 / 10; background: linear-gradient(135deg, var(--m-ink-2), var(--m-purple)); display: grid; place-items: center; position: relative; overflow: hidden; }
+    .merci .thumb img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+    /* Form */
+    .merci .merci-input { width: 100%; padding: .8rem 1rem; border: 1.5px solid #d9cbb8; border-radius: .6rem; background: #fff; color: var(--m-ink); font-size: 1rem; transition: border-color .2s, box-shadow .2s; }
+    .merci .merci-input:focus { outline: none; border-color: var(--m-purple); box-shadow: 0 0 0 3px rgba(107,45,123,.2); }
+    .merci .merci-input:user-invalid { border-color: #b3261e; }
+    .merci .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+    /* Success toast */
+    .merci .toast { position: fixed; top: 1.25rem; left: 50%; transform: translate(-50%, -1rem); z-index: 9999; width: min(92vw, 30rem); display: flex; gap: .85rem; align-items: flex-start; padding: 1rem 1.25rem; background: #fff; color: var(--m-ink); border-radius: .85rem; border-left: 6px solid var(--m-orange); box-shadow: 0 18px 50px rgba(28,18,51,.35); opacity: 0; transition: opacity .35s ease, transform .35s ease; cursor: pointer; }
+    .merci .toast.show { opacity: 1; transform: translate(-50%, 0); }
+    .merci .toast .tick { flex: none; width: 2rem; height: 2rem; border-radius: 9999px; background: var(--m-orange); color: var(--m-ink); display: grid; place-items: center; }
+
+    /* Video lightbox: panel is 70% of the screen, 16:9 */
+    .merci .vm { position: fixed; inset: 0; z-index: 9998; display: flex; align-items: center; justify-content: center; background: rgba(12,6,24,.88); opacity: 0; transition: opacity .25s ease; }
+    .merci .vm[hidden] { display: none; }
+    .merci .vm.open { opacity: 1; }
+    .merci .vm-panel { position: relative; width: min(70vw, calc(70vh * 16 / 9)); aspect-ratio: 16 / 9; background: #000; border-radius: .9rem; box-shadow: 0 30px 90px rgba(0,0,0,.6); transform-origin: center; transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s ease; opacity: 0; }
+    .merci .vm.open .vm-panel { opacity: 1; }
+    .merci .vm-panel iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; border-radius: .9rem; }
+    .merci .vm-close { position: absolute; top: -2.9rem; right: 0; width: 2.4rem; height: 2.4rem; border-radius: 9999px; background: var(--m-orange); color: var(--m-ink); font-size: 1.5rem; line-height: 1; font-weight: 700; display: grid; place-items: center; }
+    .merci .vm-close:hover { background: #ffb73d; }
+    @media (max-width: 640px) { .merci .vm-panel { width: 94vw; } }
+    body.merci-lock { overflow: hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .merci .arc { animation: none; stroke-dashoffset: 0; }
+        .merci *, .merci *::before { transition: none !important; }
+    }
+    .merci-only-mobile { display: none; }
+
+@media (max-width: 768px) {
+  .merci-only-desktop { display: none !important; }
+  .merci-only-mobile  { display: block; }
+
+  .merci-card-mobile {
+    position: relative;
+    aspect-ratio: 9 / 16;      /* phone-size card */
+    max-width: 320px;
+    margin: 0 auto 1.25rem;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .merci-card-mobile img {
+    width: 100%; height: 100%;
+    object-fit: cover;          /* crops YouTube's letterboxed thumbnail to vertical */
+  }
+  .merci-play {
+    position: absolute; inset: 0; margin: auto;
+    width: 56px; height: 56px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: rgba(0,0,0,.55); color: #fff;
+  }
+  .merci-card-mobile__info {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem;
+    color: #fff;
+    background: linear-gradient(transparent, rgba(0,0,0,.8));
+  }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="2" y="6" width="13" height="12" rx="2"/><path d="M15 10l6-3v10l-6-3z"/></symbol>
+    <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4"/></symbol>
+    <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-2v18M12 9h8v12M3 21h18M8 8h1M8 12h1M8 16h1M16 13h1M16 17h1"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z" fill="currentColor" stroke="none"/></symbol>
+</svg>
+
+<div class="merci">
+
+    <!-- HERO -->
+    <section id="top" class="relative overflow-hidden" style="background: radial-gradient(1200px 600px at 85% 20%, rgba(107,45,123,.55), transparent 60%), var(--m-ink);" aria-labelledby="hero-title">
+        <!-- Optional background video: drop a short, compressed loop into static/video/ and uncomment.
+        <video class="absolute inset-0 w-full h-full object-cover opacity-30" autoplay muted loop playsinline poster="{% static 'images/merci_logo.jpg' %}">
+            <source src="{% static 'video/merci-hero.mp4' %}" type="video/mp4">
+        </video> -->
+
+        <svg class="absolute -right-24 -top-10 w-[34rem] opacity-70 hidden md:block" viewBox="0 0 400 300" aria-hidden="true">
+            <path class="arc" pathLength="1" stroke-width="12" d="M40 230 A160 160 0 0 1 360 230"/>
+            <path class="arc" pathLength="1" stroke-width="12" d="M85 230 A115 115 0 0 1 315 230"/>
+            <path class="arc" pathLength="1" stroke-width="12" d="M130 230 A70 70 0 0 1 270 230"/>
+            <path class="arc" pathLength="1" stroke-width="12" d="M170 230 A30 30 0 0 1 230 230"/>
+        </svg>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 items-center">
+            <div class="lg:col-span-7">
+                <h1 id="hero-title" class="display text-white text-5xl sm:text-6xl lg:text-7xl font-semibold leading-[1.02]">
+                    Your Story. Our Vision. Professional Media Production.
+                </h1>
+                <p class="mt-6 text-lg text-white/80 max-w-2xl leading-relaxed">
+                    From concept development to final delivery, Merci Media &amp; Digital Marketing provides end-to-end video production, photography, studio production, documentary filmmaking, and multilingual content creation for brands, businesses, and organizations.
+                </p>
+                <div class="mt-9 flex flex-col sm:flex-row gap-4">
+                    <a href="#services" class="btn btn-primary">Explore Our Services <svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    <a href="#inquiry" class="btn btn-ghost">Discuss Your Project</a>
+                </div>
+                <p class="mt-10 text-sm text-white/60">A media production business line of Misgana Technologies PLC.</p>
+            </div>
+
+            <div class="lg:col-span-5 flex justify-center lg:justify-end">
+                <div class="rounded-3xl p-6 sm:p-8 shadow-2xl max-w-sm w-full" style="background: var(--m-cream);">
+                    <img src="{% static 'images/merci_logo.jpg' %}" alt="Merci Media & Digital logo: a stylized letter M containing a play button with broadcast waves above it" class="w-full h-auto rounded-xl" width="1026" height="767" fetchpriority="high">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20 lg:py-24" aria-labelledby="about-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-5">
+                <h2 id="about-title" class="display text-4xl sm:text-5xl font-semibold" style="color: var(--m-ink);">About Merci Media &amp; Digital Marketing</h2>
+            </div>
+            <div class="lg:col-span-7 space-y-5 text-lg leading-relaxed">
+                <p>Merci Media &amp; Digital Marketing is a media production business line of Misgana Technologies PLC, bringing together creative storytelling, professional production capabilities, and digital communication to help organizations share their messages effectively.</p>
+                <p>We work with clients to transform ideas into compelling visual content. Our services cover the entire production process, including concept development, scripting, content planning, video hosting and presentation, filming, photography, post-production, and final content delivery.</p>
+                <p>Whether you need a corporate video, a documentary, a promotional campaign, a studio production, or multilingual educational content, Merci provides a coordinated, end-to-end production experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-20 lg:py-24" style="background: var(--m-sand);" aria-labelledby="services-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <h2 id="services-title" class="display text-4xl sm:text-5xl font-semibold" style="color: var(--m-ink);">Video production, photography, and more under one roof</h2>
+                <p class="mt-4 text-lg">Choose a single service or combine them into a complete production package.</p>
+            </div>
+
+            <div class="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+                {% for s in services %}
+                <article class="svc">
+                    <div class="flex items-center gap-3">
+                        <span class="grid place-items-center w-12 h-12 rounded-xl text-white" style="background: var(--m-ink);"><svg class="icon" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg></span>
+                        <h3 class="text-xl font-bold leading-snug" style="color: var(--m-ink);">{{ s.title }}</h3>
+                    </div>
+                    {% if s.intro %}<p class="mt-4 text-sm">{{ s.intro }}</p>{% endif %}
+                    <ul class="mt-4 space-y-2 text-[15px] flex-1">
+                        {% for item in s.items %}<li>{{ item }}</li>{% endfor %}
+                    </ul>
+                    <a href="#inquiry" class="mt-6 inline-flex items-center gap-2 font-bold" style="color: var(--m-purple);">
+                        Discuss this service <svg class="icon" style="width:1.1rem;height:1.1rem" aria-hidden="true"><use href="#i-arrow"/></svg>
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process" class="py-20 lg:py-24 text-white" style="background: var(--m-ink);" aria-labelledby="process-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl">
+                <h2 id="process-title" class="display text-4xl sm:text-5xl font-semibold">One production partner, from first idea to final file</h2>
+                <p class="mt-4 text-lg text-white/75">You talk to the same team at every stage, so nothing gets lost between planning, filming, and delivery.</p>
+            </div>
+            <ol class="tl mt-14">
+                {% for title, text in steps %}
+                <li>
+                    <span class="dot" aria-hidden="true">{{ forloop.counter }}</span>
+                    <h3 class="text-lg font-bold"><span class="sr-only">Step {{ forloop.counter }}: </span>{{ title }}</h3>
+                    <p class="mt-2 text-sm text-white/70 leading-relaxed">{{ text }}</p>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </section>
+
+    <!-- CLIENTS -->
+    <section id="clients" class="py-20 lg:py-24" aria-labelledby="clients-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-5">
+                <h2 id="clients-title" class="display text-4xl sm:text-5xl font-semibold" style="color: var(--m-ink);">Who we work with</h2>
+                <p class="mt-4 text-lg leading-relaxed">Our services are tailored to different project sizes, communication goals, and audiences, from a single interview to a multi-part documentary.</p>
+            </div>
+            <ul class="lg:col-span-7 flex flex-wrap gap-3 content-start">
+                {% for c in clients %}
+                <li class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white border font-semibold" style="border-color:#e3d6c3; color: var(--m-ink);">
+                    <svg class="icon" style="width:1.1rem;height:1.1rem;color:var(--m-orange-deep)" aria-hidden="true"><use href="#i-check"/></svg>{{ c }}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+
+    <!-- WHY MERCI -->
+    <section id="why" class="py-20 lg:py-24 bg-white" aria-labelledby="why-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="why-title" class="display text-4xl sm:text-5xl font-semibold max-w-3xl" style="color: var(--m-ink);">Why choose Merci Media?</h2>
+            <div class="mt-12 grid gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+                {% for icon, title, text in benefits %}
+                <div class="flex gap-4">
+                    <span class="shrink-0 grid place-items-center w-12 h-12 rounded-full" style="background: var(--m-cream); color: var(--m-purple);"><svg class="icon" aria-hidden="true"><use href="#i-{{ icon }}"/></svg></span>
+                    <div>
+                        <h3 class="font-bold text-lg" style="color: var(--m-ink);">{{ title }}</h3>
+                        <p class="mt-1">{{ text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section id="portfolio" class="py-20 lg:py-24 text-white" style="background: linear-gradient(180deg, var(--m-ink-2), var(--m-ink));" aria-labelledby="portfolio-title">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="portfolio-title" class="display text-4xl sm:text-5xl font-semibold">Featured projects</h2>
+            <p class="mt-4 text-lg text-white/75 max-w-2xl">
+                {% if projects %}A selection of our recent work across video, documentary, and photography.{% else %}Our portfolio is being prepared. Each category below will showcase real Merci projects as they are published.{% endif %}
+            </p>
+
+            <div class="mt-8 flex flex-wrap gap-2" role="group" aria-label="Filter projects by category" id="portfolio-tabs">
+                <button type="button" class="tab" data-cat="all" aria-pressed="true">All</button>
+                {% for key, label in portfolio_categories %}<button type="button" class="tab" data-cat="{{ key }}" aria-pressed="false">{{ label }}</button>{% endfor %}
+            </div>
+
+            <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" id="portfolio-grid">
+                {% for p in projects %}
+                <article class="your-existing-card-classes merci-only-desktop" data-embed="{{ p.embed_url }}">
+
+                    <div class="thumb">
+                        <img src="{{ p.thumbnail_url }}" alt="Thumbnail for {{ p.title }}" loading="lazy" width="480" height="360">
+                        <button type="button" class="yt-play absolute inset-0 grid place-items-center group" data-embed="{{ p.embed_url }}" data-title="{{ p.title }}" aria-label="Play video: {{ p.title }}">
+                            <span class="grid place-items-center w-16 h-16 rounded-full shadow-xl transition-transform group-hover:scale-110" style="background: var(--m-orange); color: var(--m-ink);"><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg></span>
+                        </button>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-sm" style="color: var(--m-orange);">{{ p.get_category_display }}</p>
+                        <h3 class="mt-1 text-lg font-bold">{{ p.title }}</h3>
+                        {% if p.description %}<p class="mt-2 text-sm text-white/70">{{ p.description }}</p>{% endif %}
+                        <a href="{{ p.youtube_url }}" target="_blank" rel="noopener" class="mt-3 inline-block text-sm underline" style="color: var(--m-orange);">Watch on YouTube<span class="sr-only"> (opens in a new tab)</span></a>
+                    </div>
+                </article>
+                 <article class="merci-card-mobile merci-only-mobile" data-embed="{{ p.mobile_embed_url }}">
+    <img src="{{ p.mobile_thumbnail_url }}" alt="{{ p.title }}" loading="lazy">
+    <span class="merci-play" aria-hidden="true">▶</span>
+    <div class="merci-card-mobile__info">
+      <h3>{{ p.title }}</h3>
+      {% if p.description %}<p>{{ p.description }}</p>{% endif %}
+    </div>
+  </article>
+                {% empty %}
+                {% for key, label in portfolio_categories %}
+                <article class="rounded-2xl overflow-hidden bg-white/5 border border-dashed border-white/25" data-cat="{{ key }}">
+                    <div class="thumb" aria-hidden="true">
+                        <span class="grid place-items-center w-14 h-14 rounded-full border-2 border-white/40 text-white/70"><svg class="icon"><use href="#i-play"/></svg></span>
+                    </div>
+                    <div class="p-5">
+                        <p class="text-sm" style="color: var(--m-orange);">{{ label }}</p>
+                        <h3 class="mt-1 text-lg font-bold">Project coming soon</h3>
+                        <p class="mt-2 text-sm text-white/70">Thumbnail, title, description, and video playback will appear here.</p>
+                    </div>
+                </article>
+                {% endfor %}
+                {% endfor %}
+            </div>
+
+            {% if youtube_channel_url %}
+            <div class="mt-10">
+                <a href="{{ youtube_channel_url }}" target="_blank" rel="noopener" class="btn btn-ghost">Watch more on our YouTube channel<span class="sr-only"> (opens in a new tab)</span></a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="start" class="py-20 lg:py-24 text-center text-white" style="background: linear-gradient(120deg, var(--m-purple), var(--m-ink-2));" aria-labelledby="cta-title">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="cta-title" class="display text-4xl sm:text-6xl font-semibold">Let's Bring Your Story to Life.</h2>
+            <p class="mt-6 text-lg text-white/85 leading-relaxed">Whether you are planning a documentary, corporate video, photography project, studio recording, or multilingual content campaign, Merci Media &amp; Digital Marketing is ready to help you plan and produce it from start to finish.</p>
+            <div class="mt-9 flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#inquiry" class="btn btn-primary">Start a Project</a>
+                <a href="#inquiry" class="btn btn-ghost">Request a Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- INQUIRY FORM -->
+    <section id="inquiry" class="py-20 lg:py-24" aria-labelledby="inquiry-title">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 id="inquiry-title" class="display text-4xl sm:text-5xl font-semibold" style="color: var(--m-ink);">Tell us about your project</h2>
+            <p class="mt-3 text-lg">Share the basics and the Merci team will get back to you. Fields marked with * are required.</p>
+
+            <form method="post" action="{% url 'merci:merci_service' %}#inquiry" class="mt-8 grid gap-5 sm:grid-cols-2">
+                {% csrf_token %}
+                <div class="hp" aria-hidden="true">
+                    <label for="id_website">Leave this field empty</label>
+                    <input type="text" name="website" id="id_website" tabindex="-1" autocomplete="off">
+                </div>
+
+                {% if form.non_field_errors %}
+                <div class="sm:col-span-2 text-sm font-semibold" style="color:#b3261e;" role="alert">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                {% for field in form %}
+                {% if field.name != "website" %}
+                <div class="{% if field.name == 'project_description' %}sm:col-span-2{% endif %}">
+                    <label for="{{ field.id_for_label }}" class="block mb-1.5 font-semibold" style="color: var(--m-ink);">
+                        {{ field.label }}{% if field.field.required %} *{% endif %}
+                    </label>
+                    {{ field }}
+                    {% for error in field.errors %}<p class="mt-1 text-sm font-semibold" style="color:#b3261e;" role="alert">{{ error }}</p>{% endfor %}
+                </div>
+                {% endif %}
+                {% endfor %}
+
+                <div class="sm:col-span-2">
+                    <button type="submit" class="btn btn-dark w-full sm:w-auto">Submit Inquiry</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    {% if sent %}
+    <div id="merci-toast" class="toast" role="status" aria-live="polite">
+        <span class="tick" aria-hidden="true"><svg class="icon" style="width:1.1rem;height:1.1rem"><use href="#i-check"/></svg></span>
+        <div>
+            <p class="font-bold">Thank you for reaching out to us.</p>
+            <p class="text-sm mt-0.5">We will get back to you within 24 hours.</p>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Video lightbox -->
+    <div id="video-modal" class="vm" hidden role="dialog" aria-modal="true" aria-label="Video player">
+        <div class="vm-panel" id="vm-panel">
+            <button type="button" class="vm-close" id="vm-close" aria-label="Close video">&times;</button>
+            <div id="vm-stage" class="absolute inset-0"></div>
+        </div>
+    </div>
+
+    <!-- Mobile contact shortcut -->
+    <a href="#inquiry" class="btn btn-primary md:hidden fixed bottom-4 right-4 z-40 shadow-xl">Start a project</a>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    // Portfolio category filter
+    const tabs = document.querySelectorAll('#portfolio-tabs .tab');
+    const cards = document.querySelectorAll('#portfolio-grid [data-cat]');
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () {
+            tabs.forEach(function (t) { t.setAttribute('aria-pressed', t === tab ? 'true' : 'false'); });
+            const cat = tab.dataset.cat;
+            cards.forEach(function (card) {
+                card.style.display = (cat === 'all' || card.dataset.cat === cat) ? '' : 'none';
+            });
+        });
+    });
+
+    // Video lightbox: expands from the card to 70% of the screen; click outside, press Esc, or use the X to close
+    const modal = document.getElementById('video-modal');
+    const panel = document.getElementById('vm-panel');
+    const stage = document.getElementById('vm-stage');
+    const closeBtn = document.getElementById('vm-close');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let lastTrigger = null;
+
+    function openVideo(btn) {
+        lastTrigger = btn;
+        const from = btn.parentElement.getBoundingClientRect();
+        modal.hidden = false;
+        const to = panel.getBoundingClientRect();
+        if (!reduceMotion) {
+            const dx = (from.left + from.width / 2) - (to.left + to.width / 2);
+            const dy = (from.top + from.height / 2) - (to.top + to.height / 2);
+            panel.style.transition = 'none';
+            panel.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + (from.width / to.width) + ')';
+            void panel.offsetWidth; // force reflow so the starting position is applied
+            panel.style.transition = '';
+            panel.style.transform = '';
+        }
+        modal.classList.add('open');
+        document.body.classList.add('merci-lock');
+
+        const frame = document.createElement('iframe');
+        frame.src = btn.dataset.embed;
+        frame.title = btn.dataset.title;
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; fullscreen';
+        frame.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin'); // YouTube refuses to play without a referrer
+        frame.allowFullscreen = true;
+        stage.appendChild(frame);
+        closeBtn.focus();
+    }
+
+    function closeVideo() {
+        if (modal.hidden) return;
+        modal.classList.remove('open');
+        stage.innerHTML = ''; // removing the iframe stops the video
+        document.body.classList.remove('merci-lock');
+        setTimeout(function () { modal.hidden = true; }, reduceMotion ? 0 : 250);
+        if (lastTrigger) lastTrigger.focus();
+    }
+
+    document.querySelectorAll('.yt-play').forEach(function (btn) {
+        btn.addEventListener('click', function () { openVideo(btn); });
+    });
+    modal.addEventListener('click', function (e) { if (!panel.contains(e.target)) closeVideo(); });
+    closeBtn.addEventListener('click', closeVideo);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeVideo(); });
+
+    // Success toast: fades out after a few seconds; clean the URL so a refresh does not show it again
+    const toast = document.getElementById('merci-toast');
+    if (toast) {
+        requestAnimationFrame(function () { toast.classList.add('show'); });
+        const hideToast = function () {
+            toast.classList.remove('show');
+            setTimeout(function () { toast.remove(); }, 400);
+        };
+        setTimeout(hideToast, 6000);
+        toast.addEventListener('click', hideToast);
+        if (window.history.replaceState) {
+            window.history.replaceState(null, '', window.location.pathname + '#inquiry');
+        }
+    }
+
+    // Scroll to the form with a visible state after submit or validation errors
+    const hasErrors = document.querySelector('#inquiry [role="alert"]');
+    if (hasErrors) { document.getElementById('inquiry').scrollIntoView(); }
+
+    // Smooth in-page scrolling (respects reduced motion)
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        document.documentElement.style.scrollBehavior = 'smooth';
+    }
+});
+</script>
+{% endblock %}
