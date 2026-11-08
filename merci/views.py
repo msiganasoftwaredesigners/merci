@@ -35,8 +35,8 @@ DEFAULT_SITE = {
     "youtube": "https://www.youtube.com/@Msiganatech",
     "instagram": "",
     "tiktok": "https://www.tiktok.com/@merci_media_and_digital",
-    "linkedin": "",
-    "facebook": "https://www.facebook.com/AuraEventsAndMedia",
+    "linkedin": "https://www.linkedin.com/company/merci-media-digital/",
+    "facebook": "https://facebook.com/MerciMediaAndDigital",
     "parent_url": "https://msigana.com",
     "ga_id": "GTM-WX4FVPKD",
 }
