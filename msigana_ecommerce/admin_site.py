@@ -7,15 +7,10 @@ class AdminSite(DjangoAdminSite):
     site_header = 'Merci Media Admin'
     site_title = 'Merci Media Admin'
 
-    def each_context(self, request):
-        context = super().each_context(request)
-        # Always include the Google Analytics link globally in the admin context
-        context['google_analytics_link'] = '<a href="https://analytics.google.com/analytics/web/#/p454807736/reports/intelligenthome" target="_blank">Google Analytics</a>'
-        return context
 
     def each_context(self, request):
         context = super().each_context(request)
-        context['google_analytics_url'] = 'https://analytics.google.com/analytics/web/#/p454807736/reports/intelligenthome'
+        context['google_analytics_url'] = 'https://analytics.google.com/analytics/web/#/a325773040p563212076/reports/intelligenthome'
         context['google_search_console_url'] = 'https://search.google.com/search-console?resource_id=sc-domain:mercimedia.et'
         return context
 
