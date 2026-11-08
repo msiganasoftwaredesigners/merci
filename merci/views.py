@@ -38,7 +38,7 @@ DEFAULT_SITE = {
     "linkedin": "",
     "facebook": "https://www.facebook.com/AuraEventsAndMedia",
     "parent_url": "https://msigana.com",
-    "ga_id": "",
+    "ga_id": "GTM-WX4FVPKD",
 }
 
 WHATSAPP_GREETING = "Hello Merci Media, I would like a quote for a video project."
