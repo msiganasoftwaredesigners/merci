@@ -247,14 +247,13 @@
         <div data-pkg-panel="{{ g.key }}" role="tabpanel" aria-label="{{ g.label }}">
             <div class="m-pkg-grid">
                 {% for pk in g.items %}
-                <article class="m-pkg{% if pk.feature %} m-pkg-feature{% endif %}" data-reveal>
-                    {% if pk.feature %}<span class="m-badge">Recommended</span>{% endif %}
+                <article class="m-pkg" data-reveal>
                     <p class="m-pkg-cadence">{{ pk.cadence }}</p>
                     <h3>{{ pk.name }}</h3>
                     <p class="m-pkg-tag">{{ pk.tag }}</p>
                     <ul class="m-ticks">{% for pt in pk.points %}<li>{{ pt }}</li>{% endfor %}</ul>
                     <p class="m-pkg-best">{{ pk.best }}</p>
-                    <a class="m-btn {% if pk.feature %}m-btn-primary{% else %}m-btn-dark{% endif %}" href="#inquiry" data-service="{{ pk.service }}" data-package="{{ pk.name }}" data-track="package-{{ pk.name }}">Get a quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+                    <a class="m-btn m-btn-primary" href="#inquiry" data-service="{{ pk.service }}" data-package="{{ pk.name }}" data-track="package-{{ pk.name }}">Get a quote <svg class="m-ico" aria-hidden="true"><use href="#i-arrow"/></svg></a>
                 </article>
                 {% endfor %}
             </div>
