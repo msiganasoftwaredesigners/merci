@@ -1,0 +1,168 @@
+/* Privacy Policy page - plain CSS (replaces the Tailwind utility classes) */
+
+.pp-page {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    padding: 3rem 1rem;
+}
+
+.pp-card {
+    max-width: 64rem;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.pp-body {
+    padding: 2rem;
+}
+
+/* Header */
+.pp-header {
+    text-align: center;
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.pp-title {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 700;
+    color: #1e3a8a;
+    margin: 0 0 0.5rem;
+}
+
+.pp-updated {
+    color: #6b7280;
+    font-weight: 500;
+    margin: 0;
+}
+
+/* Article text */
+.pp-article {
+    max-width: none;
+    color: #374151;
+    line-height: 1.625;
+}
+
+.pp-article p {
+    margin: 0 0 1.25em;
+}
+
+.pp-article strong {
+    font-weight: 700;
+}
+
+.pp-lead {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+}
+
+/* Sections */
+.pp-section {
+    margin-bottom: 2.5rem;
+}
+
+.pp-heading {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 1rem;
+    padding-left: 1rem;
+    border-left: 4px solid #22c55e;
+}
+
+.pp-subheading {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    margin: 1rem 0 0.5rem;
+}
+
+.pp-subheading--spaced {
+    margin-top: 1.5rem;
+}
+
+/* Lists */
+.pp-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+    margin: 0 0 1.25em;
+}
+
+.pp-list li + li {
+    margin-top: 0.5rem;
+}
+
+/* Cookies box */
+.pp-callout {
+    background-color: #eff6ff;
+    border: 1px solid #dbeafe;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.pp-callout .pp-heading {
+    border-left: none;
+    padding-left: 0;
+}
+
+.pp-list--spaced-top {
+    margin-top: 1rem;
+}
+
+.pp-note {
+    margin-top: 1rem;
+}
+
+/* Contact footer */
+.pp-contact {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #f3f4f6;
+    text-align: center;
+}
+
+.pp-contact-title {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 1rem;
+}
+
+.pp-contact-text {
+    color: #4b5563;
+    margin-bottom: 1rem;
+}
+
+.pp-contact-details p {
+    margin: 0 0 0.5rem;
+}
+
+/* sm: 640px and up */
+@media (min-width: 640px) {
+    .pp-page {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+}
+
+/* md: 768px and up */
+@media (min-width: 768px) {
+    .pp-body {
+        padding: 3rem;
+    }
+}
+
+/* lg: 1024px and up */
+@media (min-width: 1024px) {
+    .pp-page {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}

@@ -4,9 +4,8 @@
         <img src="{% static 'images/msigana.png' %}" alt="logo" class="h-14 lg:h-24 w-auto object-cover logo" id="logo" data-white-logo="{% static 'images/logo-white.jpg' %}" data-black-logo="{% static 'images/logo-black.jpg' %}">
     </a>
     <div class="flex space-x-2 md:space-x-10 items-center">
-        <a href="{% url 'home' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Home</a>  
+        <a href="{% url 'merci:home' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Home</a>  
         <a href="{% url 'about-us' %}" class=" yatra_one hidden hover:text-blue-900 md:block text-blue-950 md:text-xl text_red">About</a>  
-        <a href="{% url 'post_list' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">News</a> 
         <a href="{% url 'services' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Services</a> 
         <a href="{% url 'merci:home' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Merci Media</a>
         <a href="{% url 'contact-us' %}" class=" yatra_one hidden md:block hover:text-blue-900 text-blue-950 md:text-xl">Contact</a> 
@@ -42,7 +41,7 @@
             <a href="{% url 'services' %}" class="block text-white py-2 hover:text-purple-200">Services</a>
             <a href="{% url 'merci:home' %}" class="block text-white py-2 hover:text-purple-200">Merci Media & Digitals</a>
             <a href="{% url 'contact-us' %}" class="block text-white py-2 hover:text-purple-200">Contact</a>
-            <a href="{% url 'home' %}" class="block text-white py-2 hover:text-purple-200">tools</a>
+            <a href="{% url 'merci:home' %}" class="block text-white py-2 hover:text-purple-200">tools</a>
         </nav>
     </div>
 </div>

@@ -18,6 +18,8 @@ from django.views.generic import RedirectView
 from merci import views as merci_views
 
 from .admin_site import admin_site
+from . import views
+
 
 urlpatterns = [
     path("admin/", admin_site.urls),
@@ -26,6 +28,8 @@ urlpatterns = [
     path("merci/", RedirectView.as_view(url="/", permanent=True)),
     path("video-production/", include("merci_service.urls")),
     path("blog/", include("blog.urls")),
+    path('privacy-policy/', views.privacy_policy, name='privacy-policy'),
+    path('about-us/', views.about_us, name='about-us'),
     path("news/", RedirectView.as_view(url="/blog/", permanent=True)),  # old Msigana address
     path("news/<slug:slug>/", RedirectView.as_view(pattern_name="blog:detail", permanent=True)),
     path("", include("merci.urls")),

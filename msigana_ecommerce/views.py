@@ -45,6 +45,8 @@ def about_us(request):
     offers = ["Live Class", "Self-Paced", "Premium", "B2B"]
     return render(request, 'about-us.html', {'offers': offers})
 
+
+
 def privacy_policy(request):
     return render(request, 'privacy-policy.html')
 def service_detail(request, slug):
